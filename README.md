@@ -26,8 +26,9 @@ Playbooks
 
 | Name     | file        | Description | tags    |
 |:---------|:------------|:------------|:--------|
-|`playbook`| playbook.yml |  Playbook used to run all roles in this collection  | `all roles tags` |
-|`cleanup-playbook`| cleanup-playbook.yml | Playbook used to undo playbook instalation actions | `none` |
+|`install`| install-playbook.yml |  Playbook used to run all roles in this collection  | `all roles tags` |
+|`uninstall`| uninstall-playbook.yml | Playbook used to undo playbook instalation actions | `none` |
+|`backupdb`| backupdb-playbook.yml | Playbook used to backup keycloak and stigman databases | `none` |
 
 
 

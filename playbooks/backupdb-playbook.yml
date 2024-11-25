@@ -1,0 +1,42 @@
+- name: Backup DB Playbook
+  hosts: stigman
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  vars:
+    db_user_name: root                  # database username here
+    db_user_password: ""                # database user password here
+
+    # database name here
+    db_names:
+      - stigman
+      - keycloak   
+
+    # database backup directory
+    mysql_backup_dir: /backup/mysql 
+
+    # database backup file format
+    mysql_backup_file: "{{ ansible_hostname }}-{{ansible_date_time.iso8601}}.sql"  
+
+  tasks:
+    - name: mysql backup | create backup directory
+      become: true
+      file:
+        path: "{{ mysql_backup_dir }}"
+        recurse: true
+        state: directory
+        mode: 0755
+
+    - name: backup databases
+      mysql_db:
+        state: dump
+        name: "{{ item }}"
+        target: "{{ mysql_backup_dir }}/{{ item }}-{{ mysql_backup_file }}"
+        login_user: "{{ db_user_name }}"
+        login_password: "{{ db_user_password }}"
+      with_items: "{{ db_names }}"
+
+    - name: "Backup completed -> {{ mysql_backup_dir }}/{{ mysql_backup_file }}"
+      debug:
+        msg: Database have been backed-up successfully.

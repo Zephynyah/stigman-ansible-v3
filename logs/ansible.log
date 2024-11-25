@@ -1,1 +1,675 @@
 
+2024-11-24 20:49:15,327 p=135205 u=root n=ansible | PLAY [Clean server installation] ******************************************************************************************************************************************
+2024-11-24 20:49:15,342 p=135205 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 20:49:17,753 p=135205 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:49:17,766 p=135205 u=root n=ansible | TASK [Ensure all services are stopped & disabled] *************************************************************************************************************************
+2024-11-24 20:49:22,484 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=mysqld)
+2024-11-24 20:49:23,988 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 20:49:25,298 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=stigman)
+2024-11-24 20:49:26,654 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=nginx)
+2024-11-24 20:49:27,935 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=watcher)
+2024-11-24 20:49:27,959 p=135205 u=root n=ansible | TASK [All Remove symlinks] ************************************************************************************************************************************************
+2024-11-24 20:49:28,875 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 20:49:29,599 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=stig-manager)
+2024-11-24 20:49:30,326 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=stigman-watcher)
+2024-11-24 20:49:30,342 p=135205 u=root n=ansible | TASK [Ensure removal of mysql and its dependencies] ***********************************************************************************************************************
+2024-11-24 20:49:50,273 p=135205 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:49:50,287 p=135205 u=root n=ansible | TASK [Ensure absence of mysql] ********************************************************************************************************************************************
+2024-11-24 20:49:51,185 p=135205 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/mysql)
+2024-11-24 20:49:51,935 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/var/lib/mysql)
+2024-11-24 20:49:52,675 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/data/mysql)
+2024-11-24 20:49:53,388 p=135205 u=root n=ansible | ok: [rh8-stigman-1] => (item=/tmp/stigman.sql)
+2024-11-24 20:49:53,406 p=135205 u=root n=ansible | TASK [Analyzing keycloak directories to delete...] ************************************************************************************************************************
+2024-11-24 20:49:54,270 p=135205 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:49:54,284 p=135205 u=root n=ansible | TASK [Deleting keycloak directories...] ***********************************************************************************************************************************
+2024-11-24 20:49:55,121 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/keycloak-24.0.8', 'mode': '0755', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 973, 'gid': 972, 'size': 138, 'inode': 50508516, 'dev': 64768, 'nlink': 8, 'atime': 1732498818.1228802, 'mtime': 1732498831.3011487, 'ctime': 1732498831.3011487, 'gr_name': 'keycloak', 'pw_name': 'keycloak', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': True, 'xoth': True, 'isuid': False, 'isgid': False})
+2024-11-24 20:49:55,139 p=135205 u=root n=ansible | TASK [Ensure absence of keycloak] *****************************************************************************************************************************************
+2024-11-24 20:49:55,924 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/ansible/facts.d/keycloak.fact)
+2024-11-24 20:49:56,656 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/sysconfig/keycloak)
+2024-11-24 20:49:57,385 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/systemd/system/keycloak.service)
+2024-11-24 20:49:57,399 p=135205 u=root n=ansible | TASK [Analyzing stig-manager directories to delete...] ********************************************************************************************************************
+2024-11-24 20:49:58,148 p=135205 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:49:58,162 p=135205 u=root n=ansible | TASK [Deleting aaplication directories...] ********************************************************************************************************************************
+2024-11-24 20:49:58,964 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/stig-manager-1.4.18', 'mode': '0750', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 972, 'gid': 971, 'size': 61, 'inode': 17705395, 'dev': 64768, 'nlink': 2, 'atime': 1732498971.0251307, 'mtime': 1732498987.556861, 'ctime': 1732498987.556861, 'gr_name': 'stigman', 'pw_name': 'stigman', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False})
+2024-11-24 20:49:58,980 p=135205 u=root n=ansible | TASK [Ensure absence of stig-manager] *************************************************************************************************************************************
+2024-11-24 20:49:59,781 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/systemd/system/stigman.service)
+2024-11-24 20:49:59,796 p=135205 u=root n=ansible | TASK [Analyzing stigman-watcher directories to delete...] *****************************************************************************************************************
+2024-11-24 20:50:00,538 p=135205 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:50:00,551 p=135205 u=root n=ansible | TASK [Deleting stigman-watcher directories...] ****************************************************************************************************************************
+2024-11-24 20:50:01,343 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/stigman-watcher-1.4.6', 'mode': '0750', 'isdir': True, 'ischr': False, 'isblk': False, 'isreg': False, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 972, 'gid': 971, 'size': 87, 'inode': 36223273, 'dev': 64768, 'nlink': 3, 'atime': 1732499016.6717978, 'mtime': 1732499031.5416582, 'ctime': 1732499031.5416582, 'gr_name': 'stigman', 'pw_name': 'stigman', 'wusr': True, 'rusr': True, 'xusr': True, 'wgrp': False, 'rgrp': True, 'xgrp': True, 'woth': False, 'roth': False, 'xoth': False, 'isuid': False, 'isgid': False})
+2024-11-24 20:50:01,358 p=135205 u=root n=ansible | TASK [Ensure absence of stigman-watcher] **********************************************************************************************************************************
+2024-11-24 20:50:02,141 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/systemd/system/watcher.service)
+2024-11-24 20:50:02,155 p=135205 u=root n=ansible | TASK [Find /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] *****************************************************************
+2024-11-24 20:50:02,898 p=135205 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:50:02,912 p=135205 u=root n=ansible | TASK [Remove /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] ***************************************************************
+2024-11-24 20:50:02,968 p=135205 u=root n=ansible | TASK [Ensure removal of nginx and its dependencies] ***********************************************************************************************************************
+2024-11-24 20:50:18,630 p=135205 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:50:18,643 p=135205 u=root n=ansible | TASK [Ensure absence of nginx] ********************************************************************************************************************************************
+2024-11-24 20:50:19,415 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.crt)
+2024-11-24 20:50:20,126 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.csr)
+2024-11-24 20:50:20,848 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/pki/nginx/private/rh8-stigman-1.key)
+2024-11-24 20:50:21,570 p=135205 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/nginx/conf.d/rh8-stigman-1.conf)
+2024-11-24 20:50:22,297 p=135205 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/nginx/nginx.conf)
+2024-11-24 20:50:22,313 p=135205 u=root n=ansible | TASK [Set httpd_can_network_connect flag off] *****************************************************************************************************************************
+2024-11-24 20:50:23,210 p=135205 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:50:23,226 p=135205 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 20:50:23,227 p=135205 u=root n=ansible | rh8-stigman-1              : ok=18   changed=13   unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+2024-11-24 20:50:40,777 p=135724 u=root n=ansible | PLAY [Start GSC STIG-Manager Intallation Playbook] ************************************************************************************************************************
+2024-11-24 20:50:40,796 p=135724 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 20:50:42,662 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:50:42,678 p=135724 u=root n=ansible | TASK [Ensure Prerequisits are Installed] **********************************************************************************************************************************
+2024-11-24 20:50:42,759 p=135724 u=root n=ansible | TASK [prerequisites : Install keycloak packages: ['java-17-openjdk-headless', 'unzip', 'procps-ng', 'initscripts', 'tzdata-java']] ****************************************
+2024-11-24 20:50:54,192 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:50:54,209 p=135724 u=root n=ansible | TASK [prerequisites : Install MySQL packages: ['mysql-server', 'python3-PyMySQL']] ****************************************************************************************
+2024-11-24 20:51:39,322 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:51:39,339 p=135724 u=root n=ansible | TASK [prerequisites : Install Nginx packages: ['nginx', 'openssl']] *******************************************************************************************************
+2024-11-24 20:51:54,537 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:51:54,551 p=135724 u=root n=ansible | TASK [Include MySQL Role] *************************************************************************************************************************************************
+2024-11-24 20:51:54,870 p=135724 u=root n=ansible | TASK [mysql : Validate parameters] ****************************************************************************************************************************************
+2024-11-24 20:51:54,903 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:51:54,916 p=135724 u=root n=ansible | TASK [mysql : Validate admin  password] ***********************************************************************************************************************************
+2024-11-24 20:51:54,944 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:51:54,958 p=135724 u=root n=ansible | TASK [start mysql] ********************************************************************************************************************************************************
+2024-11-24 20:52:01,608 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:01,622 p=135724 u=root n=ansible | TASK [Ensure mysql port is started] ***************************************************************************************************************************************
+2024-11-24 20:52:05,541 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:05,555 p=135724 u=root n=ansible | TASK [creating STIG Manager mysql user] ***********************************************************************************************************************************
+2024-11-24 20:52:06,526 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:06,540 p=135724 u=root n=ansible | TASK [mysql : creating Stigman DB] ****************************************************************************************************************************************
+2024-11-24 20:52:07,481 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:07,495 p=135724 u=root n=ansible | TASK [mysql : Secure MySQL instalation] ***********************************************************************************************************************************
+2024-11-24 20:52:09,487 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:09,501 p=135724 u=root n=ansible | TASK [Apply patch to mysqld configuration for stig-manager] ***************************************************************************************************************
+2024-11-24 20:52:10,408 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'mysqld', 'option': 'sort_buffer_size', 'value': '64M'})
+2024-11-24 20:52:11,135 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'mysqld', 'option': 'innodb_buffer_pool_size', 'value': '2G'})
+2024-11-24 20:52:11,152 p=135724 u=root n=ansible | TASK [mysql : Include datadir tasks] **************************************************************************************************************************************
+2024-11-24 20:52:11,210 p=135724 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/mysql/tasks/change_datadir.yml for rh8-stigman-1
+2024-11-24 20:52:11,231 p=135724 u=root n=ansible | TASK [mysql : Validate parameters] ****************************************************************************************************************************************
+2024-11-24 20:52:11,298 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:11,311 p=135724 u=root n=ansible | TASK [MySQL | Apply configuaration to avoid mysqld password prompt] *******************************************************************************************************
+2024-11-24 20:52:12,083 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'user', 'value': 'root'})
+2024-11-24 20:52:12,822 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'password', 'value': ''})
+2024-11-24 20:52:12,839 p=135724 u=root n=ansible | TASK [mysql : MySQL | Ensure service is started] **************************************************************************************************************************
+2024-11-24 20:52:14,155 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:14,169 p=135724 u=root n=ansible | TASK [mysql : MySQL | Create new data directories] ************************************************************************************************************************
+2024-11-24 20:52:15,076 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:15,091 p=135724 u=root n=ansible | TASK [mysql : MySQL | Identify the current MySQL Data directory] **********************************************************************************************************
+2024-11-24 20:52:15,979 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:15,993 p=135724 u=root n=ansible | TASK [mysql : MySQL | Ensure service is stopped] **************************************************************************************************************************
+2024-11-24 20:52:17,949 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:17,965 p=135724 u=root n=ansible | TASK [mysql : MySQL | Stat old data directory] ****************************************************************************************************************************
+2024-11-24 20:52:18,853 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:18,868 p=135724 u=root n=ansible | TASK [mysql : MySQL | Stat new data directory] ****************************************************************************************************************************
+2024-11-24 20:52:19,633 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:19,651 p=135724 u=root n=ansible | TASK [MySQL | Synchronizating /var/lib/mysql/ -> /data/mysql] *************************************************************************************************************
+2024-11-24 20:52:20,706 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:20,724 p=135724 u=root n=ansible | TASK [MySQL | Allow MySQL to modify files in /data/mysql] *****************************************************************************************************************
+2024-11-24 20:52:22,340 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:22,354 p=135724 u=root n=ansible | TASK [mysql : MySQL | Apply new SELinux file context to filesystem] *******************************************************************************************************
+2024-11-24 20:52:23,117 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:23,130 p=135724 u=root n=ansible | TASK [mysql : MySQL | Apply configuration for new data directory] *********************************************************************************************************
+2024-11-24 20:52:23,959 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/mysql-server.cnf', 'section': 'mysqld', 'option': 'datadir', 'value': '/data/mysql'})
+2024-11-24 20:52:24,693 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/mysql-server.cnf', 'section': 'mysqld', 'option': 'socket', 'value': '/data/mysql/mysql.sock'})
+2024-11-24 20:52:25,430 p=135724 u=root n=ansible | ok: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/client.cnf', 'section': 'client', 'option': 'port', 'value': '3306'})
+2024-11-24 20:52:26,174 p=135724 u=root n=ansible | ok: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/client.cnf', 'section': 'client', 'option': 'socket', 'value': '/data/mysql/mysql.sock'})
+2024-11-24 20:52:26,189 p=135724 u=root n=ansible | TASK [MySQL | Remove configuaration to avoid mysqld password prompt] ******************************************************************************************************
+2024-11-24 20:52:26,968 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'user'})
+2024-11-24 20:52:27,712 p=135724 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'password'})
+2024-11-24 20:52:27,714 p=135724 u=root n=ansible | RUNNING HANDLER [restart mysql] *******************************************************************************************************************************************
+2024-11-24 20:52:30,104 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:30,118 p=135724 u=root n=ansible | TASK [Ensure mysql port is open] ******************************************************************************************************************************************
+2024-11-24 20:52:34,012 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:34,027 p=135724 u=root n=ansible | TASK [Include Keycloak Role] **********************************************************************************************************************************************
+2024-11-24 20:52:34,131 p=135724 u=root n=ansible | TASK [keycloak : Check prerequisites] *************************************************************************************************************************************
+2024-11-24 20:52:34,166 p=135724 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/prereqs.yml for rh8-stigman-1
+2024-11-24 20:52:34,186 p=135724 u=root n=ansible | TASK [keycloak : Validate admin console password] *************************************************************************************************************************
+2024-11-24 20:52:34,215 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:34,228 p=135724 u=root n=ansible | TASK [keycloak : Validate relative path] **********************************************************************************************************************************
+2024-11-24 20:52:34,257 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:34,271 p=135724 u=root n=ansible | TASK [keycloak : Validate OS family] **************************************************************************************************************************************
+2024-11-24 20:52:34,301 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:34,315 p=135724 u=root n=ansible | TASK [keycloak : Validate additional env variables] ***********************************************************************************************************************
+2024-11-24 20:52:34,332 p=135724 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 20:52:34,346 p=135724 u=root n=ansible | TASK [keycloak : Validate proxy-headers] **********************************************************************************************************************************
+2024-11-24 20:52:34,374 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:34,388 p=135724 u=root n=ansible | TASK [keycloak : Set httpd_can_network_connect flag on and keep it persistent across reboots] *****************************************************************************
+2024-11-24 20:52:36,741 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:36,756 p=135724 u=root n=ansible | TASK [keycloak : Include database tasks] **********************************************************************************************************************************
+2024-11-24 20:52:36,805 p=135724 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/database.yml for rh8-stigman-1
+2024-11-24 20:52:36,830 p=135724 u=root n=ansible | TASK [keycloak : Ensure mysql port is started] ****************************************************************************************************************************
+2024-11-24 20:52:40,632 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:40,647 p=135724 u=root n=ansible | TASK [keycloak : creating Keycloak mysql user] ****************************************************************************************************************************
+2024-11-24 20:52:41,469 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:41,483 p=135724 u=root n=ansible | TASK [keycloak : creating Keycloak DB] ************************************************************************************************************************************
+2024-11-24 20:52:42,306 p=135724 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 20:52:42,321 p=135724 u=root n=ansible | TASK [keycloak : Include install tasks] ***********************************************************************************************************************************
+2024-11-24 20:52:42,376 p=135724 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/install.yml for rh8-stigman-1
+2024-11-24 20:52:42,404 p=135724 u=root n=ansible | TASK [keycloak : Validate parameters] *************************************************************************************************************************************
+2024-11-24 20:52:42,463 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:42,477 p=135724 u=root n=ansible | TASK [keycloak : Check for an existing deployment] ************************************************************************************************************************
+2024-11-24 20:52:43,236 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:43,269 p=135724 u=root n=ansible | TASK [Create keycloak service user/group] *********************************************************************************************************************************
+2024-11-24 20:52:44,261 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:44,294 p=135724 u=root n=ansible | TASK [Create keycloak install location] ***********************************************************************************************************************************
+2024-11-24 20:52:45,091 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:45,106 p=135724 u=root n=ansible | TASK [keycloak : Create directory for ansible custom facts] ***************************************************************************************************************
+2024-11-24 20:52:45,871 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:45,886 p=135724 u=root n=ansible | TASK [keycloak : Set download archive path] *******************************************************************************************************************************
+2024-11-24 20:52:45,931 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:45,945 p=135724 u=root n=ansible | TASK [keycloak : Check download archive path] *****************************************************************************************************************************
+2024-11-24 20:52:46,698 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:46,717 p=135724 u=root n=ansible | TASK [keycloak : Check local download archive path] ***********************************************************************************************************************
+2024-11-24 20:52:47,012 p=135724 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 20:52:47,030 p=135724 u=root n=ansible | TASK [Download keycloak archive] ******************************************************************************************************************************************
+2024-11-24 20:52:47,076 p=135724 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 20:52:47,094 p=135724 u=root n=ansible | TASK [keycloak : Check downloaded archive] ********************************************************************************************************************************
+2024-11-24 20:52:47,387 p=135724 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 20:52:47,401 p=135724 u=root n=ansible | TASK [keycloak : Copy archive to target nodes] ****************************************************************************************************************************
+2024-11-24 20:52:47,428 p=135724 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 20:52:47,460 p=135724 u=root n=ansible | TASK [Check target directory: /opt/keycloak-24.0.8/bin/] ******************************************************************************************************************
+2024-11-24 20:52:48,224 p=135724 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 20:52:48,240 p=135724 u=root n=ansible | TASK [keycloak : Extract Keycloak archive on target] **********************************************************************************************************************
+2024-11-24 20:52:50,010 p=135724 u=root n=ansible | fatal: [rh8-stigman-1]: FAILED! => {"changed": false, "msg": "Source '/opt/keycloak-24.0.8.tar.gz' does not exist"}
+2024-11-24 20:52:50,012 p=135724 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 20:52:50,012 p=135724 u=root n=ansible | rh8-stigman-1              : ok=49   changed=20   unreachable=0    failed=1    skipped=3    rescued=0    ignored=0   
+2024-11-24 21:03:54,544 p=136748 u=root n=ansible | PLAY [Clean server installation] ******************************************************************************************************************************************
+2024-11-24 21:03:54,558 p=136748 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 21:03:57,870 p=136748 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:03:57,884 p=136748 u=root n=ansible | TASK [Ensure all services are stopped & disabled] *************************************************************************************************************************
+2024-11-24 21:04:00,667 p=136748 u=root n=ansible | changed: [rh8-stigman-1] => (item=mysqld)
+2024-11-24 21:04:01,543 p=136748 u=root n=ansible | failed: [rh8-stigman-1] (item=keycloak) => {"ansible_loop_var": "item", "changed": false, "item": "keycloak", "msg": "Could not find the requested service keycloak: host"}
+2024-11-24 21:04:02,425 p=136748 u=root n=ansible | failed: [rh8-stigman-1] (item=stigman) => {"ansible_loop_var": "item", "changed": false, "item": "stigman", "msg": "Could not find the requested service stigman: host"}
+2024-11-24 21:04:03,335 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=nginx)
+2024-11-24 21:04:04,214 p=136748 u=root n=ansible | failed: [rh8-stigman-1] (item=watcher) => {"ansible_loop_var": "item", "changed": false, "item": "watcher", "msg": "Could not find the requested service watcher: host"}
+2024-11-24 21:04:04,220 p=136748 u=root n=ansible | ...ignoring
+2024-11-24 21:04:04,233 p=136748 u=root n=ansible | TASK [All Remove symlinks] ************************************************************************************************************************************************
+2024-11-24 21:04:05,139 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 21:04:05,862 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=stig-manager)
+2024-11-24 21:04:06,584 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=stigman-watcher)
+2024-11-24 21:04:06,599 p=136748 u=root n=ansible | TASK [Ensure removal of mysql and its dependencies] ***********************************************************************************************************************
+2024-11-24 21:04:22,310 p=136748 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:04:22,324 p=136748 u=root n=ansible | TASK [Ensure absence of mysql] ********************************************************************************************************************************************
+2024-11-24 21:04:23,230 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/mysql)
+2024-11-24 21:04:23,974 p=136748 u=root n=ansible | changed: [rh8-stigman-1] => (item=/var/lib/mysql)
+2024-11-24 21:04:24,720 p=136748 u=root n=ansible | changed: [rh8-stigman-1] => (item=/data/mysql)
+2024-11-24 21:04:25,445 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/tmp/stigman.sql)
+2024-11-24 21:04:25,463 p=136748 u=root n=ansible | TASK [Analyzing keycloak directories to delete...] ************************************************************************************************************************
+2024-11-24 21:04:26,329 p=136748 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:04:26,343 p=136748 u=root n=ansible | TASK [Deleting keycloak directories...] ***********************************************************************************************************************************
+2024-11-24 21:04:26,399 p=136748 u=root n=ansible | TASK [Ensure absence of keycloak] *****************************************************************************************************************************************
+2024-11-24 21:04:27,180 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/ansible/facts.d/keycloak.fact)
+2024-11-24 21:04:27,918 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/sysconfig/keycloak)
+2024-11-24 21:04:28,657 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/keycloak.service)
+2024-11-24 21:04:28,672 p=136748 u=root n=ansible | TASK [Analyzing stig-manager directories to delete...] ********************************************************************************************************************
+2024-11-24 21:04:29,428 p=136748 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:04:29,442 p=136748 u=root n=ansible | TASK [Deleting aaplication directories...] ********************************************************************************************************************************
+2024-11-24 21:04:29,497 p=136748 u=root n=ansible | TASK [Ensure absence of stig-manager] *************************************************************************************************************************************
+2024-11-24 21:04:30,285 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/stigman.service)
+2024-11-24 21:04:30,300 p=136748 u=root n=ansible | TASK [Analyzing stigman-watcher directories to delete...] *****************************************************************************************************************
+2024-11-24 21:04:31,040 p=136748 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:04:31,054 p=136748 u=root n=ansible | TASK [Deleting stigman-watcher directories...] ****************************************************************************************************************************
+2024-11-24 21:04:31,109 p=136748 u=root n=ansible | TASK [Ensure absence of stigman-watcher] **********************************************************************************************************************************
+2024-11-24 21:04:31,896 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/watcher.service)
+2024-11-24 21:04:31,911 p=136748 u=root n=ansible | TASK [Find /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] *****************************************************************
+2024-11-24 21:04:32,644 p=136748 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:04:32,658 p=136748 u=root n=ansible | TASK [Remove /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] ***************************************************************
+2024-11-24 21:04:32,716 p=136748 u=root n=ansible | TASK [Ensure removal of nginx and its dependencies] ***********************************************************************************************************************
+2024-11-24 21:04:49,325 p=136748 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:04:49,339 p=136748 u=root n=ansible | TASK [Ensure absence of nginx] ********************************************************************************************************************************************
+2024-11-24 21:04:50,114 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.crt)
+2024-11-24 21:04:50,826 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.csr)
+2024-11-24 21:04:51,541 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/private/rh8-stigman-1.key)
+2024-11-24 21:04:52,268 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/nginx/conf.d/rh8-stigman-1.conf)
+2024-11-24 21:04:52,990 p=136748 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/nginx/nginx.conf)
+2024-11-24 21:04:53,005 p=136748 u=root n=ansible | TASK [Set httpd_can_network_connect flag off] *****************************************************************************************************************************
+2024-11-24 21:04:53,906 p=136748 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:04:53,921 p=136748 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:04:53,921 p=136748 u=root n=ansible | rh8-stigman-1              : ok=15   changed=5    unreachable=0    failed=0    skipped=4    rescued=0    ignored=1   
+2024-11-24 21:08:42,373 p=137251 u=root n=ansible | PLAY [Clean server installation] ******************************************************************************************************************************************
+2024-11-24 21:08:42,386 p=137251 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 21:08:44,524 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:08:44,537 p=137251 u=root n=ansible | TASK [Ensure all services are stopped & disabled] *************************************************************************************************************************
+2024-11-24 21:08:45,738 p=137251 u=root n=ansible | failed: [rh8-stigman-1] (item=mysqld) => {"ansible_loop_var": "item", "changed": false, "item": "mysqld", "msg": "Could not find the requested service mysqld: host"}
+2024-11-24 21:08:46,625 p=137251 u=root n=ansible | failed: [rh8-stigman-1] (item=keycloak) => {"ansible_loop_var": "item", "changed": false, "item": "keycloak", "msg": "Could not find the requested service keycloak: host"}
+2024-11-24 21:08:47,512 p=137251 u=root n=ansible | failed: [rh8-stigman-1] (item=stigman) => {"ansible_loop_var": "item", "changed": false, "item": "stigman", "msg": "Could not find the requested service stigman: host"}
+2024-11-24 21:08:48,406 p=137251 u=root n=ansible | failed: [rh8-stigman-1] (item=nginx) => {"ansible_loop_var": "item", "changed": false, "item": "nginx", "msg": "Could not find the requested service nginx: host"}
+2024-11-24 21:08:49,295 p=137251 u=root n=ansible | failed: [rh8-stigman-1] (item=watcher) => {"ansible_loop_var": "item", "changed": false, "item": "watcher", "msg": "Could not find the requested service watcher: host"}
+2024-11-24 21:08:49,296 p=137251 u=root n=ansible | ...ignoring
+2024-11-24 21:08:49,309 p=137251 u=root n=ansible | TASK [All Remove symlinks] ************************************************************************************************************************************************
+2024-11-24 21:08:50,225 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 21:08:50,961 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=stig-manager)
+2024-11-24 21:08:51,687 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=stigman-watcher)
+2024-11-24 21:08:51,703 p=137251 u=root n=ansible | TASK [Ensure removal of mysql and its dependencies] ***********************************************************************************************************************
+2024-11-24 21:09:37,078 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:09:37,092 p=137251 u=root n=ansible | TASK [Ensure absence of mysql] ********************************************************************************************************************************************
+2024-11-24 21:09:38,002 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/mysql)
+2024-11-24 21:09:38,718 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/my.cnf)
+2024-11-24 21:09:39,433 p=137251 u=root n=ansible | changed: [rh8-stigman-1] => (item=/etc/my.cnf.d)
+2024-11-24 21:09:40,159 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/var/lib/mysql)
+2024-11-24 21:09:40,889 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/data/mysql)
+2024-11-24 21:09:41,621 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/tmp/stigman.sql)
+2024-11-24 21:09:41,636 p=137251 u=root n=ansible | TASK [Analyzing keycloak directories to delete...] ************************************************************************************************************************
+2024-11-24 21:09:42,502 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:09:42,516 p=137251 u=root n=ansible | TASK [Deleting keycloak directories...] ***********************************************************************************************************************************
+2024-11-24 21:09:42,571 p=137251 u=root n=ansible | TASK [Ensure absence of keycloak] *****************************************************************************************************************************************
+2024-11-24 21:09:43,358 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/ansible/facts.d/keycloak.fact)
+2024-11-24 21:09:44,082 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/sysconfig/keycloak)
+2024-11-24 21:09:44,821 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/keycloak.service)
+2024-11-24 21:09:44,835 p=137251 u=root n=ansible | TASK [Analyzing stig-manager directories to delete...] ********************************************************************************************************************
+2024-11-24 21:09:45,573 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:09:45,587 p=137251 u=root n=ansible | TASK [Deleting aaplication directories...] ********************************************************************************************************************************
+2024-11-24 21:09:45,642 p=137251 u=root n=ansible | TASK [Ensure absence of stig-manager] *************************************************************************************************************************************
+2024-11-24 21:09:46,429 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/stigman.service)
+2024-11-24 21:09:46,445 p=137251 u=root n=ansible | TASK [Analyzing stigman-watcher directories to delete...] *****************************************************************************************************************
+2024-11-24 21:09:47,188 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:09:47,202 p=137251 u=root n=ansible | TASK [Deleting stigman-watcher directories...] ****************************************************************************************************************************
+2024-11-24 21:09:47,257 p=137251 u=root n=ansible | TASK [Ensure absence of stigman-watcher] **********************************************************************************************************************************
+2024-11-24 21:09:48,043 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/systemd/system/watcher.service)
+2024-11-24 21:09:48,059 p=137251 u=root n=ansible | TASK [Find /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] *****************************************************************
+2024-11-24 21:09:48,812 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:09:48,826 p=137251 u=root n=ansible | TASK [Remove /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex] ***************************************************************
+2024-11-24 21:09:48,884 p=137251 u=root n=ansible | TASK [Ensure removal of nginx and its dependencies] ***********************************************************************************************************************
+2024-11-24 21:10:05,914 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:10:05,928 p=137251 u=root n=ansible | TASK [Ensure absence of nginx] ********************************************************************************************************************************************
+2024-11-24 21:10:06,713 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.crt)
+2024-11-24 21:10:07,420 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/rh8-stigman-1.csr)
+2024-11-24 21:10:08,137 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/pki/nginx/private/rh8-stigman-1.key)
+2024-11-24 21:10:08,859 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/nginx/conf.d/rh8-stigman-1.conf)
+2024-11-24 21:10:09,586 p=137251 u=root n=ansible | ok: [rh8-stigman-1] => (item=/etc/nginx/nginx.conf)
+2024-11-24 21:10:09,601 p=137251 u=root n=ansible | TASK [Set httpd_can_network_connect flag off] *****************************************************************************************************************************
+2024-11-24 21:10:10,475 p=137251 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:10:10,491 p=137251 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:10:10,492 p=137251 u=root n=ansible | rh8-stigman-1              : ok=15   changed=1    unreachable=0    failed=0    skipped=4    rescued=0    ignored=1   
+2024-11-24 21:10:26,423 p=137743 u=root n=ansible | PLAY [Start GSC STIG-Manager Intallation Playbook] ************************************************************************************************************************
+2024-11-24 21:10:26,442 p=137743 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 21:10:28,280 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:10:28,295 p=137743 u=root n=ansible | TASK [Ensure Prerequisits are Installed] **********************************************************************************************************************************
+2024-11-24 21:10:28,376 p=137743 u=root n=ansible | TASK [prerequisites : Install keycloak packages: ['java-17-openjdk-headless', 'unzip', 'procps-ng', 'initscripts', 'tzdata-java']] ****************************************
+2024-11-24 21:10:39,449 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:10:39,466 p=137743 u=root n=ansible | TASK [prerequisites : Install MySQL packages: ['mysql-server', 'python3-PyMySQL']] ****************************************************************************************
+2024-11-24 21:11:23,214 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:23,231 p=137743 u=root n=ansible | TASK [prerequisites : Install Nginx packages: ['nginx', 'openssl']] *******************************************************************************************************
+2024-11-24 21:11:38,330 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:38,344 p=137743 u=root n=ansible | TASK [Include MySQL Role] *************************************************************************************************************************************************
+2024-11-24 21:11:38,664 p=137743 u=root n=ansible | TASK [mysql : Validate parameters] ****************************************************************************************************************************************
+2024-11-24 21:11:38,696 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:11:38,710 p=137743 u=root n=ansible | TASK [mysql : Validate admin  password] ***********************************************************************************************************************************
+2024-11-24 21:11:38,736 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:11:38,750 p=137743 u=root n=ansible | TASK [start mysql] ********************************************************************************************************************************************************
+2024-11-24 21:11:45,412 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:45,426 p=137743 u=root n=ansible | TASK [Ensure mysql port is started] ***************************************************************************************************************************************
+2024-11-24 21:11:49,314 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:11:49,328 p=137743 u=root n=ansible | TASK [creating STIG Manager mysql user] ***********************************************************************************************************************************
+2024-11-24 21:11:50,275 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:50,289 p=137743 u=root n=ansible | TASK [mysql : creating Stigman DB] ****************************************************************************************************************************************
+2024-11-24 21:11:51,230 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:51,244 p=137743 u=root n=ansible | TASK [mysql : Secure MySQL instalation] ***********************************************************************************************************************************
+2024-11-24 21:11:53,234 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:53,248 p=137743 u=root n=ansible | TASK [Apply patch to mysqld configuration for stig-manager] ***************************************************************************************************************
+2024-11-24 21:11:54,161 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'mysqld', 'option': 'sort_buffer_size', 'value': '64M'})
+2024-11-24 21:11:54,911 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'mysqld', 'option': 'innodb_buffer_pool_size', 'value': '2G'})
+2024-11-24 21:11:54,927 p=137743 u=root n=ansible | TASK [mysql : Include datadir tasks] **************************************************************************************************************************************
+2024-11-24 21:11:54,985 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/mysql/tasks/change_datadir.yml for rh8-stigman-1
+2024-11-24 21:11:55,004 p=137743 u=root n=ansible | TASK [mysql : Validate parameters] ****************************************************************************************************************************************
+2024-11-24 21:11:55,069 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:11:55,082 p=137743 u=root n=ansible | TASK [MySQL | Apply configuaration to avoid mysqld password prompt] *******************************************************************************************************
+2024-11-24 21:11:55,863 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'user', 'value': 'root'})
+2024-11-24 21:11:56,608 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'password', 'value': ''})
+2024-11-24 21:11:56,623 p=137743 u=root n=ansible | TASK [mysql : MySQL | Ensure service is started] **************************************************************************************************************************
+2024-11-24 21:11:57,939 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:57,952 p=137743 u=root n=ansible | TASK [mysql : MySQL | Create new data directories] ************************************************************************************************************************
+2024-11-24 21:11:58,862 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:58,876 p=137743 u=root n=ansible | TASK [mysql : MySQL | Identify the current MySQL Data directory] **********************************************************************************************************
+2024-11-24 21:11:59,770 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:11:59,785 p=137743 u=root n=ansible | TASK [mysql : MySQL | Ensure service is stopped] **************************************************************************************************************************
+2024-11-24 21:12:01,731 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:01,747 p=137743 u=root n=ansible | TASK [mysql : MySQL | Stat old data directory] ****************************************************************************************************************************
+2024-11-24 21:12:02,634 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:02,648 p=137743 u=root n=ansible | TASK [mysql : MySQL | Stat new data directory] ****************************************************************************************************************************
+2024-11-24 21:12:03,407 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:03,427 p=137743 u=root n=ansible | TASK [MySQL | Synchronizating /var/lib/mysql/ -> /data/mysql] *************************************************************************************************************
+2024-11-24 21:12:04,483 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:04,500 p=137743 u=root n=ansible | TASK [MySQL | Allow MySQL to modify files in /data/mysql] *****************************************************************************************************************
+2024-11-24 21:12:06,140 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:06,154 p=137743 u=root n=ansible | TASK [mysql : MySQL | Apply new SELinux file context to filesystem] *******************************************************************************************************
+2024-11-24 21:12:06,941 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:06,955 p=137743 u=root n=ansible | TASK [mysql : MySQL | Apply configuration for new data directory] *********************************************************************************************************
+2024-11-24 21:12:07,787 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/mysql-server.cnf', 'section': 'mysqld', 'option': 'datadir', 'value': '/data/mysql'})
+2024-11-24 21:12:08,528 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/mysql-server.cnf', 'section': 'mysqld', 'option': 'socket', 'value': '/data/mysql/mysql.sock'})
+2024-11-24 21:12:09,270 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/client.cnf', 'section': 'client', 'option': 'port', 'value': '3306'})
+2024-11-24 21:12:10,013 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/etc/my.cnf.d/client.cnf', 'section': 'client', 'option': 'socket', 'value': '/data/mysql/mysql.sock'})
+2024-11-24 21:12:10,029 p=137743 u=root n=ansible | TASK [MySQL | Remove configuaration to avoid mysqld password prompt] ******************************************************************************************************
+2024-11-24 21:12:10,808 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'user'})
+2024-11-24 21:12:11,539 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'section': 'client', 'option': 'password'})
+2024-11-24 21:12:11,541 p=137743 u=root n=ansible | RUNNING HANDLER [restart mysql] *******************************************************************************************************************************************
+2024-11-24 21:12:13,892 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:13,906 p=137743 u=root n=ansible | TASK [Ensure mysql port is open] ******************************************************************************************************************************************
+2024-11-24 21:12:17,818 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:17,833 p=137743 u=root n=ansible | TASK [Include Keycloak Role] **********************************************************************************************************************************************
+2024-11-24 21:12:17,937 p=137743 u=root n=ansible | TASK [keycloak : Check prerequisites] *************************************************************************************************************************************
+2024-11-24 21:12:17,972 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/prereqs.yml for rh8-stigman-1
+2024-11-24 21:12:17,992 p=137743 u=root n=ansible | TASK [keycloak : Validate admin console password] *************************************************************************************************************************
+2024-11-24 21:12:18,021 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:18,035 p=137743 u=root n=ansible | TASK [keycloak : Validate relative path] **********************************************************************************************************************************
+2024-11-24 21:12:18,063 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:18,077 p=137743 u=root n=ansible | TASK [keycloak : Validate OS family] **************************************************************************************************************************************
+2024-11-24 21:12:18,107 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:18,121 p=137743 u=root n=ansible | TASK [keycloak : Validate additional env variables] ***********************************************************************************************************************
+2024-11-24 21:12:18,139 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:12:18,154 p=137743 u=root n=ansible | TASK [keycloak : Validate proxy-headers] **********************************************************************************************************************************
+2024-11-24 21:12:18,182 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:18,196 p=137743 u=root n=ansible | TASK [keycloak : Set httpd_can_network_connect flag on and keep it persistent across reboots] *****************************************************************************
+2024-11-24 21:12:20,655 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:20,669 p=137743 u=root n=ansible | TASK [keycloak : Include database tasks] **********************************************************************************************************************************
+2024-11-24 21:12:20,716 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/database.yml for rh8-stigman-1
+2024-11-24 21:12:20,740 p=137743 u=root n=ansible | TASK [keycloak : Ensure mysql port is started] ****************************************************************************************************************************
+2024-11-24 21:12:24,523 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:24,537 p=137743 u=root n=ansible | TASK [keycloak : creating Keycloak mysql user] ****************************************************************************************************************************
+2024-11-24 21:12:25,365 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:25,380 p=137743 u=root n=ansible | TASK [keycloak : creating Keycloak DB] ************************************************************************************************************************************
+2024-11-24 21:12:26,199 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:26,214 p=137743 u=root n=ansible | TASK [keycloak : Include install tasks] ***********************************************************************************************************************************
+2024-11-24 21:12:26,269 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/install.yml for rh8-stigman-1
+2024-11-24 21:12:26,297 p=137743 u=root n=ansible | TASK [keycloak : Validate parameters] *************************************************************************************************************************************
+2024-11-24 21:12:26,359 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:26,374 p=137743 u=root n=ansible | TASK [keycloak : Check for an existing deployment] ************************************************************************************************************************
+2024-11-24 21:12:27,142 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:27,175 p=137743 u=root n=ansible | TASK [Create keycloak service user/group] *********************************************************************************************************************************
+2024-11-24 21:12:28,172 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:28,204 p=137743 u=root n=ansible | TASK [Create keycloak install location] ***********************************************************************************************************************************
+2024-11-24 21:12:29,004 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:29,019 p=137743 u=root n=ansible | TASK [keycloak : Create directory for ansible custom facts] ***************************************************************************************************************
+2024-11-24 21:12:29,778 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:29,793 p=137743 u=root n=ansible | TASK [keycloak : Set download archive path] *******************************************************************************************************************************
+2024-11-24 21:12:29,839 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:29,854 p=137743 u=root n=ansible | TASK [keycloak : Check download archive path] *****************************************************************************************************************************
+2024-11-24 21:12:30,611 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:30,629 p=137743 u=root n=ansible | TASK [keycloak : Check local download archive path] ***********************************************************************************************************************
+2024-11-24 21:12:30,936 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:12:30,954 p=137743 u=root n=ansible | TASK [Download keycloak archive] ******************************************************************************************************************************************
+2024-11-24 21:12:31,002 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:12:31,018 p=137743 u=root n=ansible | TASK [keycloak : Check downloaded archive] ********************************************************************************************************************************
+2024-11-24 21:12:31,622 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:12:31,637 p=137743 u=root n=ansible | TASK [keycloak : Copy archive to target nodes] ****************************************************************************************************************************
+2024-11-24 21:12:41,907 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:41,939 p=137743 u=root n=ansible | TASK [Check target directory: /opt/keycloak-24.0.8/bin/] ******************************************************************************************************************
+2024-11-24 21:12:42,704 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:12:42,719 p=137743 u=root n=ansible | TASK [keycloak : Extract Keycloak archive on target] **********************************************************************************************************************
+2024-11-24 21:12:49,218 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:49,233 p=137743 u=root n=ansible | TASK [keycloak : Inform decompression was not executed] *******************************************************************************************************************
+2024-11-24 21:12:49,257 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:12:49,271 p=137743 u=root n=ansible | TASK [keycloak : Create Keycloak symbolic link] ***************************************************************************************************************************
+2024-11-24 21:12:50,166 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:50,180 p=137743 u=root n=ansible | TASK [keycloak : Remove Keycloak package] *********************************************************************************************************************************
+2024-11-24 21:12:50,937 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:50,951 p=137743 u=root n=ansible | TASK [keycloak : Include systemd tasks] ***********************************************************************************************************************************
+2024-11-24 21:12:50,984 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/systemd.yml for rh8-stigman-1
+2024-11-24 21:12:51,040 p=137743 u=root n=ansible | TASK [Configure sysconfig file for keycloak service] **********************************************************************************************************************
+2024-11-24 21:12:52,480 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:52,494 p=137743 u=root n=ansible | TASK [Configure systemd unit file for keycloak service] *******************************************************************************************************************
+2024-11-24 21:12:53,941 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:53,955 p=137743 u=root n=ansible | TASK [Configure config files for keycloak service] ************************************************************************************************************************
+2024-11-24 21:12:55,507 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=keycloak.conf)
+2024-11-24 21:12:56,965 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=quarkus.properties)
+2024-11-24 21:12:56,981 p=137743 u=root n=ansible | TASK [keycloak : Ensure logdirectory exists] ******************************************************************************************************************************
+2024-11-24 21:12:57,791 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:12:57,793 p=137743 u=root n=ansible | RUNNING HANDLER [Rebuild keycloak config] *********************************************************************************************************************************
+2024-11-24 21:12:57,838 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/rebuild_config.yml for rh8-stigman-1
+2024-11-24 21:12:57,839 p=137743 u=root n=ansible | RUNNING HANDLER [Rebuild {{ keycloak.service_name }} config] **************************************************************************************************************
+2024-11-24 21:13:18,311 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:13:18,312 p=137743 u=root n=ansible | RUNNING HANDLER [Restart keycloak] ****************************************************************************************************************************************
+2024-11-24 21:13:18,361 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:13:18,362 p=137743 u=root n=ansible | RUNNING HANDLER [Restart and enable {{ keycloak.service_name }} service] **************************************************************************************************
+2024-11-24 21:13:20,116 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:13:20,116 p=137743 u=root n=ansible | RUNNING HANDLER [Wait until {{ keycloak.service_name }} service becomes active {{ keycloak.health_url }}] *****************************************************************
+2024-11-24 21:14:19,123 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:19,140 p=137743 u=root n=ansible | TASK [Start and wait for keycloak service] ********************************************************************************************************************************
+2024-11-24 21:14:19,174 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/start.yml for rh8-stigman-1
+2024-11-24 21:14:19,232 p=137743 u=root n=ansible | TASK [Start keycloak service] *********************************************************************************************************************************************
+2024-11-24 21:14:20,682 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:20,715 p=137743 u=root n=ansible | TASK [Wait until keycloak becomes active http://localhost:8080/realms/master/.well-known/openid-configuration] ************************************************************
+2024-11-24 21:14:21,644 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:21,661 p=137743 u=root n=ansible | TASK [keycloak : Link default logs directory] *****************************************************************************************************************************
+2024-11-24 21:14:22,440 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:22,455 p=137743 u=root n=ansible | TASK [keycloak : Check service status] ************************************************************************************************************************************
+2024-11-24 21:14:23,400 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:23,415 p=137743 u=root n=ansible | TASK [Trigger bootstrapped notification: remove `keycloak_admin_user[_pass]` env vars] ************************************************************************************
+2024-11-24 21:14:23,450 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:14:23,452 p=137743 u=root n=ansible | RUNNING HANDLER [keycloak : Bootstrapped] *********************************************************************************************************************************
+2024-11-24 21:14:23,501 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/bootstrapped.yml for rh8-stigman-1
+2024-11-24 21:14:23,502 p=137743 u=root n=ansible | RUNNING HANDLER [keycloak : Write ansible custom facts] *******************************************************************************************************************
+2024-11-24 21:14:24,936 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:14:24,936 p=137743 u=root n=ansible | RUNNING HANDLER [keycloak : Re-read custom facts] *************************************************************************************************************************
+2024-11-24 21:14:26,646 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:26,647 p=137743 u=root n=ansible | RUNNING HANDLER [keycloak : Ensure that `KEYCLOAK_ADMIN[_PASSWORD]` get purged] *******************************************************************************************
+2024-11-24 21:14:26,694 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/systemd.yml for rh8-stigman-1
+2024-11-24 21:14:26,695 p=137743 u=root n=ansible | RUNNING HANDLER [Configure sysconfig file for {{ keycloak.service_name }} service] ****************************************************************************************
+2024-11-24 21:14:28,204 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:14:28,205 p=137743 u=root n=ansible | RUNNING HANDLER [Configure systemd unit file for keycloak service] ********************************************************************************************************
+2024-11-24 21:14:29,526 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:29,527 p=137743 u=root n=ansible | RUNNING HANDLER [Restart keycloak] ****************************************************************************************************************************************
+2024-11-24 21:14:29,574 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/keycloak/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:14:29,574 p=137743 u=root n=ansible | RUNNING HANDLER [Restart and enable {{ keycloak.service_name }} service] **************************************************************************************************
+2024-11-24 21:14:31,145 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:14:31,146 p=137743 u=root n=ansible | RUNNING HANDLER [Wait until {{ keycloak.service_name }} service becomes active {{ keycloak.health_url }}] *****************************************************************
+2024-11-24 21:14:55,586 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:55,602 p=137743 u=root n=ansible | TASK [Include keycloak Realm Role] ****************************************************************************************************************************************
+2024-11-24 21:14:55,717 p=137743 u=root n=ansible | TASK [keycloak_realm : Generate keycloak auth token] **********************************************************************************************************************
+2024-11-24 21:14:58,448 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:58,463 p=137743 u=root n=ansible | TASK [keycloak_realm : Determine if realm exists] *************************************************************************************************************************
+2024-11-24 21:14:59,396 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:14:59,411 p=137743 u=root n=ansible | TASK [keycloak_realm : Create Realm] **************************************************************************************************************************************
+2024-11-24 21:15:05,729 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:05,743 p=137743 u=root n=ansible | TASK [Include Ngix role] **************************************************************************************************************************************************
+2024-11-24 21:15:05,861 p=137743 u=root n=ansible | TASK [nginx : Validate parameters] ****************************************************************************************************************************************
+2024-11-24 21:15:05,992 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:06,005 p=137743 u=root n=ansible | TASK [nginx : Collect all conf.d items inside dir] ************************************************************************************************************************
+2024-11-24 21:15:06,918 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:06,931 p=137743 u=root n=ansible | TASK [nginx : Remove all conf.d items inside dir] *************************************************************************************************************************
+2024-11-24 21:15:06,954 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:15:06,968 p=137743 u=root n=ansible | TASK [Ensure nginx in a running state] ************************************************************************************************************************************
+2024-11-24 21:15:11,929 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:11,944 p=137743 u=root n=ansible | TASK [nginx : Set httpd_can_network_connect flag on and keep it persistent across reboots] ********************************************************************************
+2024-11-24 21:15:14,685 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:14,699 p=137743 u=root n=ansible | TASK [Check for nginx configuration] **************************************************************************************************************************************
+2024-11-24 21:15:15,495 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:15,510 p=137743 u=root n=ansible | TASK [nginx : Include OpenSSL for Selfsigned certificate] *****************************************************************************************************************
+2024-11-24 21:15:15,535 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:15:15,549 p=137743 u=root n=ansible | TASK [nginx : Include Ownca Authority for selfigned certificates] *********************************************************************************************************
+2024-11-24 21:15:15,592 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/nginx/tasks/ownca.yml for rh8-stigman-1
+2024-11-24 21:15:15,611 p=137743 u=root n=ansible | TASK [nginx : Ensure root CA directories exist] ***************************************************************************************************************************
+2024-11-24 21:15:15,911 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:15,929 p=137743 u=root n=ansible | TASK [nginx : Create private key with password protection] ****************************************************************************************************************
+2024-11-24 21:15:16,628 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:16,646 p=137743 u=root n=ansible | TASK [nginx : Create certificate signing request (CSR) for CA certificate] ************************************************************************************************
+2024-11-24 21:15:17,323 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:17,341 p=137743 u=root n=ansible | TASK [nginx : Create self-signed CA certificate from CSR] *****************************************************************************************************************
+2024-11-24 21:15:18,254 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:18,269 p=137743 u=root n=ansible | TASK [nginx : Include Ownca OpenSSL for Selfsigned certificate] ***********************************************************************************************************
+2024-11-24 21:15:18,317 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/nginx/tasks/ownca_openssl.yml for rh8-stigman-1
+2024-11-24 21:15:18,337 p=137743 u=root n=ansible | TASK [Ensure nginx private directory exist] *******************************************************************************************************************************
+2024-11-24 21:15:19,107 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:19,171 p=137743 u=root n=ansible | TASK [nginx : Ensure root CA sub-directories not exist: ownca/[keys, csrs, and crts]] *************************************************************************************
+2024-11-24 21:15:19,517 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/keys)
+2024-11-24 21:15:19,782 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/csrs)
+2024-11-24 21:15:20,045 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/crts)
+2024-11-24 21:15:20,106 p=137743 u=root n=ansible | TASK [nginx : Ensure root CA directories exist: ownca/[keys, csrs, and crts]] *********************************************************************************************
+2024-11-24 21:15:20,452 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/keys)
+2024-11-24 21:15:20,718 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/csrs)
+2024-11-24 21:15:20,989 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost] => (item=/opt/ownca/crts)
+2024-11-24 21:15:21,007 p=137743 u=root n=ansible | TASK [nginx : Create private key for new certificate] *********************************************************************************************************************
+2024-11-24 21:15:21,837 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:21,855 p=137743 u=root n=ansible | TASK [nginx : Create certificate signing request (CSR) for new certificate] ***********************************************************************************************
+2024-11-24 21:15:22,436 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:22,455 p=137743 u=root n=ansible | TASK [nginx : Sign certificate with our CA] *******************************************************************************************************************************
+2024-11-24 21:15:23,094 p=137743 u=root n=ansible | changed: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:23,108 p=137743 u=root n=ansible | TASK [nginx : Copy certificate file on servers] ***************************************************************************************************************************
+2024-11-24 21:15:25,039 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/ownca/crts/rh8-stigman-1.crt', 'dest': '/etc/pki/nginx'})
+2024-11-24 21:15:26,916 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/ownca/csrs/rh8-stigman-1.csr', 'dest': '/etc/pki/nginx'})
+2024-11-24 21:15:28,803 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'path': '/opt/ownca/keys/rh8-stigman-1.key', 'dest': '/etc/pki/nginx/private'})
+2024-11-24 21:15:28,818 p=137743 u=root n=ansible | TASK [Configure nginx server conf file] ***********************************************************************************************************************************
+2024-11-24 21:15:30,307 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:30,322 p=137743 u=root n=ansible | TASK [Patch the nginx config file] ****************************************************************************************************************************************
+2024-11-24 21:15:31,228 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item={'regexp': 'worker_connections', 'replace': '     worker_connections 4096;'})
+2024-11-24 21:15:31,231 p=137743 u=root n=ansible | RUNNING HANDLER [Restart nginx] *******************************************************************************************************************************************
+2024-11-24 21:15:31,281 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/nginx/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:15:31,281 p=137743 u=root n=ansible | RUNNING HANDLER [Test nginx and reload] ***********************************************************************************************************************************
+2024-11-24 21:15:32,095 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:32,096 p=137743 u=root n=ansible | RUNNING HANDLER [nginx : Restart and enable service] **********************************************************************************************************************
+2024-11-24 21:15:33,978 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:33,978 p=137743 u=root n=ansible | RUNNING HANDLER [Ensure nginx in a running state] *************************************************************************************************************************
+2024-11-24 21:15:34,959 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:34,974 p=137743 u=root n=ansible | TASK [Include STIG-Manager Role] ******************************************************************************************************************************************
+2024-11-24 21:15:35,116 p=137743 u=root n=ansible | TASK [stig-manager : Validate parameters] *********************************************************************************************************************************
+2024-11-24 21:15:35,174 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:35,190 p=137743 u=root n=ansible | TASK [stig-manager : Check for an existing deployment] ********************************************************************************************************************
+2024-11-24 21:15:35,962 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:35,992 p=137743 u=root n=ansible | TASK [stig-manager : Create stigman service user/group] *******************************************************************************************************************
+2024-11-24 21:15:36,946 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:36,975 p=137743 u=root n=ansible | TASK [stig-manager : Create stigman install location] *********************************************************************************************************************
+2024-11-24 21:15:37,770 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:37,785 p=137743 u=root n=ansible | TASK [stig-manager : Create directory for ansible custom facts] ***********************************************************************************************************
+2024-11-24 21:15:38,557 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:38,571 p=137743 u=root n=ansible | TASK [stig-manager : Set download archive path] ***************************************************************************************************************************
+2024-11-24 21:15:38,611 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:38,625 p=137743 u=root n=ansible | TASK [stig-manager : Check download archive path] *************************************************************************************************************************
+2024-11-24 21:15:39,379 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:39,397 p=137743 u=root n=ansible | TASK [stig-manager : Check local download archive path] *******************************************************************************************************************
+2024-11-24 21:15:39,692 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:39,710 p=137743 u=root n=ansible | TASK [stig-manager : Download stigman archive] ****************************************************************************************************************************
+2024-11-24 21:15:39,752 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:15:39,770 p=137743 u=root n=ansible | TASK [stig-manager : Check downloaded archive] ****************************************************************************************************************************
+2024-11-24 21:15:40,146 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:15:40,161 p=137743 u=root n=ansible | TASK [stig-manager : Copy archive to target nodes] ************************************************************************************************************************
+2024-11-24 21:15:44,433 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:44,462 p=137743 u=root n=ansible | TASK [Check target directory for: /opt/stig-manager-1.4.18/stig-manager-linuxstatic/] *************************************************************************************
+2024-11-24 21:15:45,279 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:15:45,293 p=137743 u=root n=ansible | TASK [stig-manager : Extract stigman archive on target] *******************************************************************************************************************
+2024-11-24 21:15:52,066 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:52,081 p=137743 u=root n=ansible | TASK [stig-manager : Inform decompression was not executed] ***************************************************************************************************************
+2024-11-24 21:15:52,105 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:15:52,119 p=137743 u=root n=ansible | TASK [stig-manager : Include seed DB tasks] *******************************************************************************************************************************
+2024-11-24 21:15:52,141 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:15:52,155 p=137743 u=root n=ansible | TASK [stig-manager : Include systemd tasks] *******************************************************************************************************************************
+2024-11-24 21:15:52,188 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stig-manager/tasks/systemd.yml for rh8-stigman-1
+2024-11-24 21:15:52,212 p=137743 u=root n=ansible | TASK [stig-manager : Configure systemd unit file for stigman service] *****************************************************************************************************
+2024-11-24 21:15:53,630 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:53,660 p=137743 u=root n=ansible | TASK [stig-manager : Configure sysconfig file for stigman service] ********************************************************************************************************
+2024-11-24 21:15:55,128 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:55,142 p=137743 u=root n=ansible | TASK [stig-manager : Create STIG-manager symbolic link] *******************************************************************************************************************
+2024-11-24 21:15:55,909 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:55,923 p=137743 u=root n=ansible | TASK [stig-manager : Include restart tasks] *******************************************************************************************************************************
+2024-11-24 21:15:55,958 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stig-manager/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:15:55,983 p=137743 u=root n=ansible | TASK [stig-manager : Restart and enable service] **************************************************************************************************************************
+2024-11-24 21:15:57,724 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:15:57,739 p=137743 u=root n=ansible | TASK [stig-manager : Wait until service becomes active] *******************************************************************************************************************
+2024-11-24 21:16:03,776 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:03,791 p=137743 u=root n=ansible | TASK [stig-manager : Include DB Collection tasks] *************************************************************************************************************************
+2024-11-24 21:16:03,846 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stig-manager/tasks/collection.yml for rh8-stigman-1
+2024-11-24 21:16:03,874 p=137743 u=root n=ansible | TASK [stig-manager : Generate keycloak auth token] ************************************************************************************************************************
+2024-11-24 21:16:05,266 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:05,281 p=137743 u=root n=ansible | TASK [stig-manager : Get all current STIG manager Users] ******************************************************************************************************************
+2024-11-24 21:16:06,440 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:06,455 p=137743 u=root n=ansible | TASK [stig-manager : Parse CLI-Admin user ID] *****************************************************************************************************************************
+2024-11-24 21:16:06,486 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:06,501 p=137743 u=root n=ansible | TASK [stig-manager : Create initial Collection called "Sample Collection"] ************************************************************************************************
+2024-11-24 21:16:07,568 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:07,583 p=137743 u=root n=ansible | TASK [stig-manager : Pre-Register Admin and give access to first collection] **********************************************************************************************
+2024-11-24 21:16:08,578 p=137743 u=root n=ansible | ok: [rh8-stigman-1] => (item=admin)
+2024-11-24 21:16:09,465 p=137743 u=root n=ansible | ok: [rh8-stigman-1] => (item=stigman-watcher)
+2024-11-24 21:16:09,481 p=137743 u=root n=ansible | TASK [stig-manager : Remove STIG manager package] *************************************************************************************************************************
+2024-11-24 21:16:10,246 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:10,248 p=137743 u=root n=ansible | RUNNING HANDLER [stig-manager : Restart Stigman Service] ******************************************************************************************************************
+2024-11-24 21:16:10,295 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stig-manager/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:16:10,295 p=137743 u=root n=ansible | RUNNING HANDLER [stig-manager : Restart and enable service] ***************************************************************************************************************
+2024-11-24 21:16:11,743 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:11,744 p=137743 u=root n=ansible | RUNNING HANDLER [stig-manager : Wait until service becomes active] ********************************************************************************************************
+2024-11-24 21:16:17,520 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:17,534 p=137743 u=root n=ansible | TASK [Include STIG-Manager Watcher Role] **********************************************************************************************************************************
+2024-11-24 21:16:17,694 p=137743 u=root n=ansible | TASK [stigman-watcher : Validate parameters] ******************************************************************************************************************************
+2024-11-24 21:16:17,744 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:17,757 p=137743 u=root n=ansible | TASK [stigman-watcher : Check for an existing deployment] *****************************************************************************************************************
+2024-11-24 21:16:18,523 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:18,550 p=137743 u=root n=ansible | TASK [stigman-watcher : Create watcher service user/group] ****************************************************************************************************************
+2024-11-24 21:16:19,472 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:19,498 p=137743 u=root n=ansible | TASK [stigman-watcher : Create watcher install location] ******************************************************************************************************************
+2024-11-24 21:16:20,283 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:20,298 p=137743 u=root n=ansible | TASK [stigman-watcher : Create directory for ansible custom facts] ********************************************************************************************************
+2024-11-24 21:16:21,072 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:21,087 p=137743 u=root n=ansible | TASK [stigman-watcher : Set download archive path] ************************************************************************************************************************
+2024-11-24 21:16:21,125 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:21,140 p=137743 u=root n=ansible | TASK [stigman-watcher : Check download archive path] **********************************************************************************************************************
+2024-11-24 21:16:21,903 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:21,922 p=137743 u=root n=ansible | TASK [stigman-watcher : Check local download archive path] ****************************************************************************************************************
+2024-11-24 21:16:22,218 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:16:22,237 p=137743 u=root n=ansible | TASK [stigman-watcher : Download stigman watcher archive] *****************************************************************************************************************
+2024-11-24 21:16:22,277 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:16:22,295 p=137743 u=root n=ansible | TASK [stigman-watcher : Check downloaded archive] *************************************************************************************************************************
+2024-11-24 21:16:22,626 p=137743 u=root n=ansible | ok: [rh8-stigman-1 -> localhost]
+2024-11-24 21:16:22,641 p=137743 u=root n=ansible | TASK [stigman-watcher : Copy archive to target nodes] *********************************************************************************************************************
+2024-11-24 21:16:24,960 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:24,987 p=137743 u=root n=ansible | TASK [Check target directory for: /opt/stigman-watcher-1.4.6/stig-manager-linuxstatic/] ***********************************************************************************
+2024-11-24 21:16:25,758 p=137743 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:16:25,774 p=137743 u=root n=ansible | TASK [stigman-watcher : Extract stigman watcher archive on target] ********************************************************************************************************
+2024-11-24 21:16:28,512 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:28,526 p=137743 u=root n=ansible | TASK [stigman-watcher : Inform decompression was not executed] ************************************************************************************************************
+2024-11-24 21:16:28,551 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:16:28,566 p=137743 u=root n=ansible | TASK [stigman-watcher : Generating JWT Keys and Certificates] *************************************************************************************************************
+2024-11-24 21:16:28,589 p=137743 u=root n=ansible | skipping: [rh8-stigman-1]
+2024-11-24 21:16:28,604 p=137743 u=root n=ansible | TASK [stigman-watcher : Create STIG-Manager Watcher symbolic link] ********************************************************************************************************
+2024-11-24 21:16:29,398 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:29,413 p=137743 u=root n=ansible | TASK [stigman-watcher : Include systemd tasks] ****************************************************************************************************************************
+2024-11-24 21:16:29,446 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stigman-watcher/tasks/systemd.yml for rh8-stigman-1
+2024-11-24 21:16:29,468 p=137743 u=root n=ansible | TASK [stigman-watcher : Configure systemd unit file for watcher service] **************************************************************************************************
+2024-11-24 21:16:30,938 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:30,953 p=137743 u=root n=ansible | TASK [stigman-watcher : Configure sysconfig file for stigman watcher service] *********************************************************************************************
+2024-11-24 21:16:32,414 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:32,428 p=137743 u=root n=ansible | TASK [stigman-watcher : Remove STIG-Manager Watcher package] **************************************************************************************************************
+2024-11-24 21:16:33,207 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:33,209 p=137743 u=root n=ansible | RUNNING HANDLER [stigman-watcher : Restart watcher] ***********************************************************************************************************************
+2024-11-24 21:16:33,256 p=137743 u=root n=ansible | included: /opt/ansible/stigman-ansible-v3/roles/stigman-watcher/tasks/restart.yml for rh8-stigman-1
+2024-11-24 21:16:33,257 p=137743 u=root n=ansible | RUNNING HANDLER [stigman-watcher : Restart and enable service] ************************************************************************************************************
+2024-11-24 21:16:35,016 p=137743 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:16:35,030 p=137743 u=root n=ansible | TASK [Ensure services are restarted] **************************************************************************************************************************************
+2024-11-24 21:16:41,913 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=mysqld)
+2024-11-24 21:16:44,264 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 21:16:46,336 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=nginx)
+2024-11-24 21:16:48,537 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=stigman)
+2024-11-24 21:16:51,507 p=137743 u=root n=ansible | changed: [rh8-stigman-1] => (item=watcher)
+2024-11-24 21:16:51,524 p=137743 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:16:51,524 p=137743 u=root n=ansible | rh8-stigman-1              : ok=154  changed=65   unreachable=0    failed=0    skipped=11   rescued=0    ignored=0   
+2024-11-24 21:54:28,285 p=140979 u=root n=ansible | PLAY [Backup DB Playbook] *************************************************************************************************************************************************
+2024-11-24 21:54:28,300 p=140979 u=root n=ansible | TASK [mysql backup | create backup directory] *****************************************************************************************************************************
+2024-11-24 21:54:31,553 p=140979 u=root n=ansible | changed: [rh8-stigman-1]
+2024-11-24 21:54:31,558 p=140979 u=root n=ansible | TASK [backup databases] ***************************************************************************************************************************************************
+2024-11-24 21:54:31,602 p=140979 u=root n=ansible | fatal: [rh8-stigman-1]: FAILED! => {"msg": "'db_name' is undefined"}
+2024-11-24 21:54:31,604 p=140979 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:54:31,605 p=140979 u=root n=ansible | rh8-stigman-1              : ok=1    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2024-11-24 21:55:02,273 p=141022 u=root n=ansible | PLAY [Backup DB Playbook] *************************************************************************************************************************************************
+2024-11-24 21:55:02,288 p=141022 u=root n=ansible | TASK [mysql backup | create backup directory] *****************************************************************************************************************************
+2024-11-24 21:55:03,406 p=141022 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:55:03,411 p=141022 u=root n=ansible | TASK [backup databases] ***************************************************************************************************************************************************
+2024-11-24 21:55:03,464 p=141022 u=root n=ansible | fatal: [rh8-stigman-1]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: {{ ansible_hostname }}-{{ansible_date_time.iso8601}}.sql: 'ansible_hostname' is undefined\n\nThe error appears to be in '/opt/ansible/stigman-ansible-v3/playbooks/backupdb-playbook.yml': line 27, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: backup databases\n      ^ here\n"}
+2024-11-24 21:55:03,466 p=141022 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:55:03,466 p=141022 u=root n=ansible | rh8-stigman-1              : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2024-11-24 21:57:37,726 p=141075 u=root n=ansible | PLAY [Backup DB Playbook] *************************************************************************************************************************************************
+2024-11-24 21:57:37,741 p=141075 u=root n=ansible | TASK [mysql backup | create backup directory] *****************************************************************************************************************************
+2024-11-24 21:57:39,221 p=141075 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:57:39,227 p=141075 u=root n=ansible | TASK [backup databases] ***************************************************************************************************************************************************
+2024-11-24 21:57:39,279 p=141075 u=root n=ansible | fatal: [rh8-stigman-1]: FAILED! => {"msg": "The task includes an option with an undefined variable. The error was: {{ ansible_hostname }}-{{ansible_date_time.iso8601}}.sql: 'ansible_hostname' is undefined\n\nThe error appears to be in '/opt/ansible/stigman-ansible-v3/playbooks/backupdb-playbook.yml': line 31, column 7, but may\nbe elsewhere in the file depending on the exact syntax problem.\n\nThe offending line appears to be:\n\n\n    - name: backup databases\n      ^ here\n"}
+2024-11-24 21:57:39,280 p=141075 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:57:39,281 p=141075 u=root n=ansible | rh8-stigman-1              : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2024-11-24 21:57:50,476 p=141108 u=root n=ansible | PLAY [Backup DB Playbook] *************************************************************************************************************************************************
+2024-11-24 21:57:50,490 p=141108 u=root n=ansible | TASK [Gathering Facts] ****************************************************************************************************************************************************
+2024-11-24 21:57:52,592 p=141108 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:57:52,606 p=141108 u=root n=ansible | TASK [mysql backup | create backup directory] *****************************************************************************************************************************
+2024-11-24 21:57:53,483 p=141108 u=root n=ansible | ok: [rh8-stigman-1]
+2024-11-24 21:57:53,497 p=141108 u=root n=ansible | TASK [backup databases] ***************************************************************************************************************************************************
+2024-11-24 21:57:55,096 p=141108 u=root n=ansible | changed: [rh8-stigman-1] => (item=stigman)
+2024-11-24 21:57:56,902 p=141108 u=root n=ansible | changed: [rh8-stigman-1] => (item=keycloak)
+2024-11-24 21:57:56,942 p=141108 u=root n=ansible | TASK [Backup completed -> /backup/mysql/rh8-stigman-1-2024-11-25T02:57:52Z.sql] *******************************************************************************************
+2024-11-24 21:57:56,968 p=141108 u=root n=ansible | ok: [rh8-stigman-1] => {
+    "msg": "Database have been backed-up successfully."
+}
+2024-11-24 21:57:56,971 p=141108 u=root n=ansible | PLAY RECAP ****************************************************************************************************************************************************************
+2024-11-24 21:57:56,971 p=141108 u=root n=ansible | rh8-stigman-1              : ok=4    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

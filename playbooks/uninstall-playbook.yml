@@ -45,6 +45,8 @@
         state: absent
       with_items:
         - /etc/mysql 
+        - /etc/my.cnf
+        - /etc/my.cnf.d
         - /var/lib/mysql 
         - /data/mysql
         - /tmp/stigman.sql
