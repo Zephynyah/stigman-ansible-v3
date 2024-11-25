@@ -1,0 +1,10 @@
+---
+- name: Restart and enable service
+  ansible.builtin.systemd:
+    name: "{{ watcher.service_name }}"
+    enabled: true
+    state: restarted
+    daemon_reload: true
+  become: true
+  tags:
+    - always

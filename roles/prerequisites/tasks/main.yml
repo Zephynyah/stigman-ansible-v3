@@ -1,0 +1,31 @@
+---
+- name: "Install keycloak packages: {{ keycloak_prereq_package_list }}"
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ keycloak_prereq_package_list }}"
+    state: present
+  when:
+    - keycloak_prereq_package_list  | default([]) | length > 0
+  tags:
+    - always
+
+- name: "Install MySQL packages: {{ mysql_prereq_package_list }}"
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ mysql_prereq_package_list }}"
+    state: present
+  when:
+    - mysql_prereq_package_list  | default([]) | length > 0
+  tags:
+    - always
+
+- name: "Install Nginx packages: {{ nginx_prereq_package_list }}"
+  become: true
+  ansible.builtin.dnf:
+    name: "{{ nginx_prereq_package_list }}"
+    state: present
+  when:
+    - nginx_prereq_package_list  | default([]) | length > 0
+  tags:
+    - always
+

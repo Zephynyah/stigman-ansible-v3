@@ -1,0 +1,22 @@
+---
+- name: Write ansible custom facts
+  become: true
+  ansible.builtin.template:
+    src: keycloak.fact.j2
+    dest: /etc/ansible/facts.d/keycloak.fact
+    mode: '0644'
+  vars:
+    bootstrapped: true
+  tags:
+    - keycloak
+
+- name: Re-read custom facts
+  ansible.builtin.setup:
+    filter: ansible_local
+  tags:
+    - keycloak
+
+- name: Ensure that `KEYCLOAK_ADMIN[_PASSWORD]` get purged
+  ansible.builtin.include_tasks: systemd.yml
+  tags:
+    - keycloak

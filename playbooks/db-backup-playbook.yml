@@ -1,0 +1,33 @@
+- name: Backup DB Playbook
+  # https://github.com/daljitdokal/ansible-mysql-backup/blob/main/database_backup_playbook.yaml
+  hosts: stigman
+  #gather_facts: true
+  become: yes
+  become_method: sudo
+
+  vars_files:
+    - database_vault.yml
+
+  tasks:
+    - name: mysql backup | create backup directory
+      become: true
+      file:
+        path: "{{ mysql_backup_dir }}"
+        recurse: true
+        state: directory
+        mode: 0755
+
+    - name: backup databases
+      mysql_db:
+        state: dump
+        name: "{{ item }}"
+        target: "{{ mysql_backup_dir }}/{{ item }}-{{ mysql_backup_filename_format }}"
+        login_user: root
+        login_password: ""
+      with_items: 
+        - stigman
+        - keycloak
+
+    - name: Download completed
+      debug:
+        msg: Database have been downloaded successfully.

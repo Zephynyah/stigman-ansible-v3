@@ -1,0 +1,102 @@
+---
+# tasks file for keycloak
+- name: Check prerequisites
+  ansible.builtin.include_tasks: prereqs.yml
+  tags:
+    - prereqs
+    - always
+
+- name: Include database tasks
+  ansible.builtin.include_tasks: database.yml
+  tags:
+    - database
+    - keycloak
+  when:
+    - keycloak_db_enabled | default(false) | bool
+    - keycloak_db_user is defined
+    - keycloak_db_pass is defined
+    - keycloak_db_name is defined
+
+- name: Include install tasks
+  ansible.builtin.include_tasks: install.yml
+  tags:
+    - install
+    - keycloak
+
+- name: Include systemd tasks
+  ansible.builtin.include_tasks: systemd.yml
+  tags:
+    - systemd
+    - keycloak
+
+- name: "Configure config files for keycloak service"
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "{{ keycloak.home }}/conf/{{ item }}"
+    owner: "{{ keycloak.service_user }}"
+    group: "{{ keycloak.service_group }}"
+    mode: '0640'
+  become: true
+  loop:
+    - keycloak.conf
+    - quarkus.properties
+  notify:
+    - rebuild keycloak config
+    - restart keycloak
+  tags:
+    - keycloak
+
+- name: Ensure logdirectory exists
+  ansible.builtin.file:
+    state: directory
+    path: "{{ keycloak.log.file | dirname }}"
+    owner: "{{ keycloak.service_user }}"
+    group: "{{ keycloak.service_group }}"
+    mode: '0775'
+  become: true
+  tags:
+    - keycloak
+
+- name: Flush pending handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - keycloak
+
+- name: "Start and wait for keycloak service"
+  ansible.builtin.include_tasks: start.yml
+  tags:
+    - keycloak
+
+- name: Link default logs directory
+  ansible.builtin.file:
+    state: link
+    src: "{{ keycloak.log.file | dirname }}"
+    dest: "{{ keycloak_log_target }}"
+    force: true
+  become: true
+  tags:
+    - keycloak
+
+- name: Check service status
+  ansible.builtin.systemd:
+    name: "{{ keycloak.service_name }}"
+  register: keycloak_service_status
+  changed_when: false
+  tags:
+    - keycloak
+
+- name: "Trigger bootstrapped notification: remove `keycloak_admin_user[_pass]` env vars"
+  when:
+    - not ansible_local.keycloak.general.bootstrapped | default(false) | bool # it was not bootstrapped prior to the current role's execution
+    - keycloak_service_status.status.ActiveState == "active"                  # but it is now
+  ansible.builtin.assert: { that: true, quiet: true }
+  changed_when: true
+  notify:
+    - bootstrapped
+  tags:
+    - keycloak
+
+- name: Flush pending handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - keycloak

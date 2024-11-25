@@ -1,0 +1,11 @@
+---
+watcher: # noqa var-naming this is an internal dict of interpolated values
+  home: "{{ watcher_home }}"
+  bundle: "{{ watcher_archive }}"
+  config_file: "{{ watcher_config_file }}"
+  service_name: "watcher"
+  service_user: "{{ watcher_service_user }}"
+  service_group: "{{ watcher_service_group }}"
+  offline_install: "{{ watcher_offline_install }}"
+  log:
+    file: "{{ watcher_home }}/logs/{{ watcher_log_file }}"

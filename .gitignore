@@ -1,0 +1,30 @@
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# mkdocs documentation
+/site
+
+# Ansible
+*.tar.xz
+*.tar.gz
+*.zip
+.tmp
+.cache
+.vscode/
+__pycache__/
+docs/plugins/
+docs/roles/
+docs/_build/
+.pytest_cache/
+.mypy_cache/
+*.retry
+changelogs/.plugin-cache.yaml
+*.pem
+*.key
+*.enc

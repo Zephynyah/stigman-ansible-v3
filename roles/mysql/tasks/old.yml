@@ -1,0 +1,16 @@
+- name: "Old MySQL | Synchronizating {{ stat_old_data_dir.stat.path }} -> {{ mysql_data_dir }}"
+  become: true
+  synchronize:
+    src: "{{ stat_old_data_dir.stat.path }}"
+    dest: "{{ mysql_data_dir }}"
+    checksum: true
+    times: true
+    archive: yes
+    recursive: true
+  when:
+    - stat_old_data_dir.stat.exists
+    - stat_new_data_dir.stat.exists  
+    - mysql_state.state == 'stopped'
+  register: synchronized
+  tags:
+    - never

@@ -1,0 +1,88 @@
+{{ ansible_managed | comment }}
+
+# Basic settings for running in production. Change accordingly before deploying the server.
+
+{% if keycloak_db_enabled is defined and keycloak_db_user is defined and keycloak_db_pass is defined and keycloak_db_schema is defined -%}
+{% if keycloak_db_enabled is sameas true -%}
+# Database
+
+# The database vendor.
+db={{ keycloak_jdbc_engine | lower }}
+
+# The username of the database user.
+db-username={{ keycloak_db_user | lower }}
+
+# The password of the database user.
+db-password={{ keycloak_db_pass }}
+
+# The full database JDBC URL. If not provided, a default URL is set based on the selected database vendor.
+db-url={{ keycloak_jdbc_url }}
+
+{% endif -%}
+{% endif -%}
+
+{% if keycloak_hostname_strict_https is defined and keycloak_hostname_strict_https is sameas true -%}
+hostname-strict-https=true
+{% endif -%}
+{% if keycloak_hostname_strict_https is defined and keycloak_hostname_strict_https is sameas false -%}
+hostname-strict-https=false
+{% endif -%}
+
+{% if keycloak_hostname_backchannel_dynamic is defined and keycloak_hostname_backchannel_dynamic is sameas true -%}
+hostname-backchannel-dynamic=true
+{% endif -%}
+{% if keycloak_hostname_backchannel_dynamic is defined and keycloak_hostname_backchannel_dynamic is sameas false -%}
+hostname-backchannel-dynamic=false
+{% endif -%}
+
+# Observability
+metrics-enabled={{ keycloak_metrics_enabled | lower }}
+health-enabled={{ keycloak_health_enabled | lower }}
+
+# HTTP
+http-enabled={{ keycloak_http_enabled | lower }}
+http-port={{ keycloak_http_port }}
+http-relative-path={{ keycloak_http_relative_path }}
+
+
+# HTTPS
+https-port={{ keycloak_https_port }}
+{% if keycloak_https_key_file_enabled %}
+https-certificate-file={{ keycloak_cert_file}}
+https-certificate-key-file={{ keycloak_key_file }}
+{% endif %}
+
+# Client URL configuration
+{% if keycloak_frontend_url %}
+# hostname-url={{ keycloak_frontend_url }}
+{% else %}
+hostname-url: https://{{ ansible_hostname | d('localhost')}}/auth/
+hostname-admin-url: https://{{ ansible_hostname | d('localhost')}}/auth/
+# hostname={{ keycloak_hostname }} 
+# hostname-port={{ keycloak_port }}
+# hostname-path={{ keycloak_path }}
+{% endif %}
+
+#hostname-admin-url={{ keycloak_admin_url }}
+hostname-strict={{ keycloak_hostname_strict | lower }}
+#hostname-strict-backchannel={{ keycloak_hostname_strict_backchannel | lower }}
+
+{% if keycloak_proxy_headers | length > 0 %}
+proxy-headers={{ keycloak_proxy_headers | lower }}
+{% elif keycloak_proxy_mode is defined and keycloak_proxy_mode != "none" %}
+# Deprecated Proxy configuration
+proxy={{ keycloak_proxy_mode }}
+{% endif %}
+
+spi-sticky-session-encoder-infinispan-should-attach-route={{ keycloak_spi_sticky_session_encoder_infinispan_should_attach_route | d(true) | lower }}
+
+# Transaction
+transaction-xa-enabled={{ keycloak_transaction_xa_enabled | lower }}
+
+# Logging
+#log-format=%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p [%c] (%t) %s%e%n
+log={{ keycloak_log }}
+log-level={{ keycloak.log.level }}
+log-file={{ keycloak.log.file }}
+log-file-format={{ keycloak.log.format }}
+

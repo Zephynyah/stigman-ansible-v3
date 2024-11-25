@@ -1,0 +1,25 @@
+{{ ansible_managed | comment }}
+
+WATCHER_ADD_EXISTING={{ watcher_add_existing  | lower }}
+WATCHER_API_BASE={{ watcher_api_base }}
+WATCHER_AUTHORITY={{ watcher_authority }}
+WATCHER_CARGO_DELAY={{ watcher_cargo_delay }}
+WATCHER_CARGO_SIZE={{ watcher_cargo_size }}
+WATCHER_CLIENT_ID={{ watcher_client_id }}
+{% if watcher_auth_strategy == "client_key" -%}
+WATCHER_CLIENT_KEY=
+WATCHER_CLIENT_KEY_PASSPHRASE=
+{% else %}
+WATCHER_CLIENT_SECRET={{ watcher_client_secret }}
+{% endif -%}
+WATCHER_COLLECTION={{ watcher_collection }}
+WATCHER_CREATE_OBJECTS={{ watcher_create_objects  | lower }}
+WATCHER_LOG_FILE={{ watcher_log_file }}
+WATCHER_LOG_FILE_LEVEL={{ watcher_log_file_level }}
+WATCHER_IGNORE_GLOBS={{ watcher_ignore_globs }}
+WATCHER_PATH={{ watcher_path }}
+WATCHER_USE_POLLING={{ watcher_use_polling  | lower }}
+WATCHER_STABILITY_THRESHOLD={{ watcher_stability_threshold }}
+WATCHER_MODE={{ watcher_mode }}
+WATCHER_SCAN_INTERVAL={{ watcher_scan_interval }}
+WATCHER_HISTORY_FILE={{ watcher_history_file }}

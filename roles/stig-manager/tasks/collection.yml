@@ -1,0 +1,111 @@
+---
+- name: Generate keycloak auth token
+  ansible.builtin.uri:
+    url: "{{ stigman_oidc_provider }}/protocol/openid-connect/token"
+    method: POST
+    body:
+      client_id: "{{ keycloak.client_id }}"
+      username: "{{ keycloak.admin_user }}"
+      password: "{{ keycloak.admin_pass }}"
+      grant_type: "{{ keycloak.grant_type }}"
+    body_format: form-urlencoded
+    validate_certs: false
+  no_log: "{{ keycloak.no_log | default('True') }}"
+  register: keycloak_auth_response
+  until: keycloak_auth_response.status == 200
+  retries: 5
+  delay: 3
+  tags:
+    - stig-manager
+
+- name: 'Get all current STIG manager Users'
+  ansible.builtin.uri:
+    url: 'http://localhost:54000/api/users?elevate=true&projection=collectionGrants'
+    method: GET
+    headers:
+      accept: application/json
+      Authorization: "Bearer {{ keycloak_auth_response.json.access_token }}"
+  register: user_result
+  tags:
+    - stig-manager
+
+- name: "Parse CLI-Admin user ID"
+  set_fact:
+    admin_id: "{{ user_result | json_query(user_query) | first }}"
+  vars:
+    user_query: "json[?username=='admin-cli'].userId"
+  tags:
+    - stig-manager
+
+
+### TO DO 
+### Get current collections
+
+- name: 'Create initial Collection called "Sample Collection"'
+  ansible.builtin.uri:
+    status_code: 201
+    url: 'http://localhost:54000/api/collections?projection=grants&elevate=true'
+    method: POST
+    body:
+      description: Initial Collection
+      grants:
+        - accessLevel: 4
+          userId: "{{ admin_id }}"
+      labels:
+        - color: aa33cc
+          description: Test
+          name: Test
+      metadata:
+        additionalProp1: string
+        additionalProp2: string
+        additionalProp3: string
+      name: Sample Collection
+      settings:
+        fields:
+          comment:
+            enabled: always
+            required: findings
+          detail:
+            enabled: always
+            required: findings
+        history:
+          maxReviews: 5
+        status:
+          canAccept: true
+          minAcceptGrant: 2
+          resetCriteria: result
+    body_format: json
+    headers:
+      accept: application/json
+      Content-Type: application/json
+      Authorization: "Bearer {{ keycloak_auth_response.json.access_token }}"
+  register: create_collections_result
+  when:
+    - keycloak_auth_response is defined
+  tags:
+    - stig-manager
+
+- name: 'Pre-Register Admin and give access to first collection'
+  ansible.builtin.uri:
+    url: 'http://localhost:54000/api/users?elevate=true&projection=collectionGrants'
+    method: POST
+    body:
+      collectionGrants:
+        - accessLevel: 4
+          collectionId: '1'
+      username: '{{ item }}'
+    body_format: json
+    headers:
+      accept: application/json
+      Content-Type: application/json
+      Authorization: "Bearer {{ keycloak_auth_response.json.access_token }}"
+    status_code: 201
+  register: create_user_result
+  loop:
+    - 'admin'
+    - 'stigman-watcher'
+  when:
+    - keycloak_auth_response is defined
+    - create_collections_result is defined
+  tags:
+    - stig-manager

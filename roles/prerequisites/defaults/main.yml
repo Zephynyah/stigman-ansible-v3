@@ -1,0 +1,16 @@
+---
+keycloak_varjvm_package: "{{ keycloak_jvm_package | default('java-17-openjdk-headless') }}"
+keycloak_prereq_package_list:
+      - "{{ keycloak_varjvm_package }}"
+      - unzip
+      - procps-ng
+      - initscripts
+      - tzdata-java
+
+mysql_prereq_package_list:
+      - mysql-server
+      - python3-PyMySQL
+
+nginx_prereq_package_list:
+      - nginx
+      - openssl

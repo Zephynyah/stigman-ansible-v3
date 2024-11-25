@@ -1,0 +1,6 @@
+---
+- name: "Restart Stigman Service"
+  ansible.builtin.include_tasks: restart.yml
+  listen: "restart stigman"
+  tags:
+    - always

@@ -1,0 +1,14 @@
+---
+db_name: stigman                       # database name here
+db_user_name: stigman                 # database username here
+db_user_password: Password123!        # database user password here
+vault_root_passwd: ""
+
+exclude_db:
+  - Database
+  - information_schema
+  - performance_schema
+  - mysql"
+
+mysql_backup_dir: /backup/mysql
+mysql_backup_filename_format: "{{ ansible_hostname }}-%Y%m%d-%H%M%S.mysqldump"

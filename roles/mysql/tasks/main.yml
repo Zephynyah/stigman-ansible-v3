@@ -1,0 +1,111 @@
+---
+- name: Validate parameters
+  ansible.builtin.assert:
+    that:
+      - mysql_user_name is defined
+      - mysql_database_name is defined
+      - mysql_data_dir is defined
+    quiet: true
+  tags:
+    - mysql
+
+- name: Validate admin  password
+  ansible.builtin.assert:
+    that:
+      - mysql_user_password | length > 11
+    quiet: true
+    fail_msg: "The database password is empty or invalid. Please set the mysql_user_password to a 11+ char long string"
+    success_msg: "{{ 'Database user password OK' }}"
+  tags:
+    - mysql
+
+- name: "start mysql"
+  ansible.builtin.systemd:
+    name: mysqld
+    state: started
+  become: true
+  tags:
+    - mysql
+
+- name: Ensure mysql port is started
+  wait_for:
+    port: 3306
+    delay: 3
+    timeout: 300
+  tags:
+    - mysql
+
+- name: creating STIG Manager mysql user
+  no_log: true
+  mysql_user:
+    name: "{{ mysql_user_name }}"
+    password: "{{ mysql_user_password }}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present    
+  tags:
+    - mysql
+
+- name: creating Stigman DB
+  mysql_db:
+    name: "{{ mysql_database_name }}"
+    state: present   
+  tags:
+    - mysql
+
+- name: Secure MySQL instalation
+  become: yes
+  expect:
+    command: mysql_secure_installation
+    responses:
+      'Enter current password for root': ''
+      'Set root password': 'n'
+      'Remove anonymous users': 'y'
+      'Disallow root login remotely': 'y'
+      'Remove test database': 'y'
+      'Reload privilege tables now': 'y'
+    timeout: 1
+  register: secure_mysqldb
+  failed_when: "'... Failed!' in secure_mysqldb.stdout_lines"
+  notify:
+    - restart mysql
+  tags:
+    - mysql
+
+- name: Apply patch to mysqld configuration for stig-manager
+  ini_file:
+    path: /etc/my.cnf.d/mysql-server.cnf
+    section: "{{ item.section }}"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
+  with_items:
+    - { section: "mysqld", option: "sort_buffer_size", value: "{{ mysql.sort_buffer_size }}" }
+    - { section: "mysqld", option: "innodb_buffer_pool_size", value: "{{ mysql.innodb_buffer_pool_size }}" }
+  become: true
+  notify:
+    - restart mysql
+  tags:
+    - mysql
+
+- name: Include datadir tasks
+  ansible.builtin.include_tasks: change_datadir.yml
+  when:
+   - mysql_data_dir != '/var/lib/mysql'
+  tags:
+    - datadir
+    - mysql
+
+- name: Ensure mysql port is open
+  wait_for:
+    port: 3306
+    delay: 3
+    timeout: 300
+  tags:
+    - always
+
+- name: Flush pending handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - always
+
+

@@ -1,0 +1,28 @@
+{{ ansible_managed | comment }}
+[Unit]
+Description=STIG Manager Server
+After=network.target
+
+[Service]
+Type=simple
+LimitNOFILE=102642
+AmbientCapabilities=CAP_SYS_ADMIN
+#AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+WorkingDirectory={{ stigman_symlink }}
+ExecStart=/bin/bash -c "./stig-manager.sh"
+#User={{ stigman.service_user }}
+#Group={{ stigman.service_group }}
+
+{% if stigman_service_restart_always %}
+Restart=always
+{% elif stigman_service_restart_on_failure %}
+Restart=on-failure
+{% endif %}
+RestartSec={{ stigman_service_restartsec }}
+SuccessExitStatus=0
+TimeoutStartSec=60s
+TimeoutStopSec=60s
+
+[Install]
+WantedBy=multi-user.target

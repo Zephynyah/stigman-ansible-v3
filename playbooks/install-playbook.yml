@@ -1,0 +1,98 @@
+---
+- name: Start GSC STIG-Manager Intallation Playbook
+  hosts: stigman
+  gather_facts: true
+  become: yes
+  become_method: sudo
+
+  vars_prompt:
+     - name: keycloak_admin_pass
+       prompt: Enter the Admin Password for Keycloak
+       default: Password123!
+
+     - name: mysql_user_password
+       prompt: Enter the DB Password for Stigman User
+       default: Password123!
+
+
+  tasks:
+    - name: Ensure Prerequisits are Installed
+      include_role:
+        name: prerequisites
+      tags:
+        - always
+
+    - name: Include MySQL Role
+      include_role:
+        name: mysql
+      tags:
+        - mysql
+      when:
+        - not mysql_skip_install | default(false) | bool
+
+        
+    - name: Include Keycloak Role
+      include_role:
+        name: keycloak
+      tags:
+        - keycloak
+      when:
+        - not keycloak_skip_install | default(false) | bool
+
+
+    - name: Include keycloak Realm Role
+      include_role:
+        name: keycloak_realm
+      tags:
+        - keycloak_realm
+      when:
+        - not keycloak_realm_skip_install | default(false) | bool
+
+
+    - name: Include Ngix role
+      include_role:
+        name: nginx
+      tags:
+        - nginx
+        - openssl
+        - setsebool
+      when:
+        - not nginx_skip_install | default(false) | bool
+
+
+    - name: Include STIG-Manager Role
+      include_role:
+        name: stig-manager
+      tags:
+        - stig-manager
+        - seed
+      when:
+        - not stigman_skip_install | default(false) | bool
+
+
+    - name: Include STIG-Manager Watcher Role
+      include_role:
+        name: stigman-watcher
+      tags:
+        - stigman-watcher
+        - watcher
+        - jwt
+      when:
+        - not watcher_skip_install | default(false) | bool
+
+
+    - name: Ensure services are restarted
+      become: true
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: true
+        state: restarted
+        daemon_reload: true
+      with_items:
+        - mysqld
+        - keycloak
+        - nginx
+        - stigman
+        - watcher
+      tags:
+        - always

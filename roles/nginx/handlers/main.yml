@@ -1,0 +1,7 @@
+---
+- name: "Restart nginx"
+  ansible.builtin.include_tasks: restart.yml
+  listen: "restart nginx"
+  tags:
+    - always
+

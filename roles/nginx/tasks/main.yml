@@ -1,0 +1,112 @@
+---
+- name: Validate parameters
+  ansible.builtin.assert:
+    that:
+      - nginx.service_name is defined
+      - nginx.key_file is defined
+      - nginx.crt_file is defined
+      - nginx.csr_file is defined
+      - nginx.siteconf_file is defined
+    quiet: true
+  tags:
+    - nginx
+
+- name: Collect all conf.d items inside dir
+  find:
+    path: "{{ nginx_siteconf_dir }}"
+    hidden: true
+    file_type: any
+  changed_when: false
+  register: confd_collected
+  tags:
+    - nginx
+
+- name: Remove all conf.d items inside dir
+  file:
+    path: "{{ item.path }}"
+    state: absent
+  with_items: "{{ confd_collected.files }}"
+  when: confd_collected.matched|int != 0
+  no_log: True
+  tags:
+    - nginx
+
+- name: Ensure nginx in a running state
+  ansible.builtin.systemd:
+    name: nginx
+    state: started
+  register: nginxDetails
+  until: nginxDetails.status.ActiveState == "active"
+  retries: 10
+  delay: 3
+  tags:
+    - nginx
+
+- name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+  become: true
+  command: setsebool httpd_can_network_connect on -P
+  tags:
+    - nginx
+    - setsebool
+
+- name: Check for nginx configuration
+  stat:
+    path: /etc/nginx/nginx.conf
+  register: nginx_conf
+  tags:
+    - nginx
+
+- name: Include OpenSSL for Selfsigned certificate
+  ansible.builtin.include_tasks: openssl.yml
+  tags:
+    - nginx
+    - openssl
+  when: (nginx_ownca_enabled|bool is defined and nginx_ownca_enabled|bool == False) or nginx_ownca_enabled is undefined
+
+- name: Include Ownca Authority
+  block:
+    - name: Include Ownca Authority for selfigned certificates
+      ansible.builtin.include_tasks: ownca.yml
+      tags:
+        - nginx
+        - openssl
+
+    - name: Include Ownca OpenSSL for Selfsigned certificate
+      ansible.builtin.include_tasks: ownca_openssl.yml
+      tags:
+        - nginx
+        - openssl
+  when: nginx_ownca_enabled|bool is defined and nginx_ownca_enabled|bool == True
+
+- name: "Configure nginx server conf file"
+  template:
+    src: 'server.conf.j2'
+    dest: "{{ nginx.siteconf_file }}"
+    group: 'root'
+    owner: 'root'
+    mode: '0644'
+  register: nginx_register_nginx_config
+  notify:
+    - restart nginx
+  tags:
+    - nginx
+
+- name: Patch the nginx config file
+  ansible.builtin.replace:
+    dest: /etc/nginx/nginx.conf
+    regexp: '^(.*){{ item.regexp }}(.*)$'
+    replace: '{{ item.replace }}'
+    owner: nginx
+    group: nginx
+    mode: 644
+  with_items:
+    - { regexp: 'worker_connections', replace: '     worker_connections 4096;' }
+  notify:
+    - restart nginx
+  tags:
+    - nginx
+
+- name: Flush pending handlers
+  ansible.builtin.meta: flush_handlers
+  tags:
+    - always

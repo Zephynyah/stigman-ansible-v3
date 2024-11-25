@@ -1,0 +1,29 @@
+---
+- name: Ensure mysql port is started
+  wait_for:
+    port: 3306
+    delay: 3
+    timeout: 300
+  tags:
+    - Keycloak
+
+- name: creating Keycloak mysql user
+  no_log: true
+  mysql_user:
+    name: "{{ keycloak_db_user }}"
+    password: "{{ keycloak_db_pass }}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present    
+  tags:
+    - Keycloak
+
+- name: creating Keycloak DB
+  mysql_db:
+    name: "{{ keycloak_db_schema }}"
+    state: present 
+    #encoding: utf8
+    ## [ utf8_unicode_ci]
+    #collation: utf8_general_ci
+  tags:
+    - Keycloak

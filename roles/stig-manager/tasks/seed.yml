@@ -1,0 +1,28 @@
+---
+- name: "Configure seed DB file for MySQL"
+  become: true
+  ansible.builtin.template:
+    src: stigman.sql.j2
+    dest: "{{ stigman_db_dump_file }}"
+    #owner: stigman
+    #group: stigman
+    mode: '0755'
+  register: seed_file
+  tags:
+    - stig-manager
+    - seed
+
+- name: Insert seed data into stigman database
+  mysql_db:
+    state: import
+    name: "{{ stigman_db_schema }}"
+    target: "{{ stigman_db_dump_file }}"
+    login_user: "{{ stigman_db_user }}"
+    login_password: "{{ stigman_db_password }}"
+  #no_log: true
+  when:
+    - stigman_db_schema == "stigman"
+    - (not seed_file.failed)
+  tags:
+    - stig-manager
+    - seed

@@ -1,0 +1,168 @@
+---
+- name: Clean server installation
+  hosts: stigman
+  gather_facts: true
+  ignore_errors: true
+  vars:
+    mysql_db: stigman
+    mysql_db_user: stigman
+
+  tasks:
+    - name: Ensure all services are stopped & disabled
+      become: true
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        enabled: false
+        state: stopped
+      with_items:
+        - mysqld
+        - keycloak
+        - stigman
+        - nginx
+        - watcher
+
+    - name: All Remove symlinks
+      file:
+        path: "/opt/{{ item }}"
+        state: absent
+      with_items:
+        - keycloak
+        - stig-manager
+        - stigman-watcher
+
+    - name: Ensure removal of mysql and its dependencies
+      ansible.builtin.dnf:
+        name: 
+          - mysql-server
+          - mysql-client 
+        state: absent
+        autoremove: yes
+
+    - name: Ensure absence of mysql
+      become: true
+      ansible.builtin.file:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/mysql 
+        - /var/lib/mysql 
+        - /data/mysql
+        - /tmp/stigman.sql
+
+    - name: Analyzing keycloak directories to delete...
+      find:
+        paths: /opt/
+        patterns: "keycloak-.*"
+        use_regex: true
+        file_type: directory
+      register: keycloak_to_delete 
+
+    - name: Deleting keycloak directories...
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ keycloak_to_delete.files }}"
+      become: yes
+
+    - name: Ensure absence of keycloak
+      become: true
+      ansible.builtin.file:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/ansible/facts.d/keycloak.fact
+        - /etc/sysconfig/keycloak
+        - /etc/systemd/system/keycloak.service
+
+    - name: Analyzing stig-manager directories to delete...
+      find:
+        paths: /opt/
+        patterns: "stig-manager-.*"
+        use_regex: true
+        file_type: directory
+      register: stig_manager_to_delete 
+
+    - name: Deleting aaplication directories...
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ stig_manager_to_delete.files }}"
+      become: yes
+
+    - name: Ensure absence of stig-manager
+      become: true
+      ansible.builtin.file:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/systemd/system/stigman.service
+
+    - name: Analyzing stigman-watcher directories to delete...
+      find:
+        paths: /opt/
+        patterns: "stigman-watcher-.*"
+        use_regex: true
+        file_type: directory
+      register: stigman_watcher_to_delete 
+
+    - name: Deleting stigman-watcher directories...
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ stigman_watcher_to_delete.files }}"
+      become: yes
+
+    - name: Ensure absence of stigman-watcher
+      become: true
+      ansible.builtin.file:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/systemd/system/watcher.service
+
+    - name: Find /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex
+      find:
+        paths: /opt/
+        patterns: "^.*?\\.(?:zip|tar\\.gz|tar\\.xz)$"
+        size: 10m
+        use_regex: yes
+      register: deployed_packages
+
+    - name: Remove /opt/ files equal or greater than 10 megabytes ending with .zip, .tar.xz or .tar.gz via regex
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ deployed_packages.files }}"
+
+    - name: Ensure removal of nginx and its dependencies
+      ansible.builtin.dnf:
+        name: 
+          - nginx 
+        state: absent
+        autoremove: yes
+
+    - name: Ensure absence of nginx
+      become: true
+      ansible.builtin.file:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - /etc/pki/nginx/{{ ansible_hostname }}.crt
+        - /etc/pki/nginx/{{ ansible_hostname }}.csr
+        - /etc/pki/nginx/private/{{ ansible_hostname }}.key
+        - /etc/nginx/conf.d/{{ ansible_hostname }}.conf
+        - /etc/nginx/nginx.conf
+
+    - name: Set httpd_can_network_connect flag off
+      seboolean:
+        name: httpd_can_network_connect
+        state: no
+        persistent: no
+
+    - name: Ensure removal of persistent facts from ansible.builtin.set_fact
+      ansible.builtin.meta: clear_facts
+
+
+
+
+

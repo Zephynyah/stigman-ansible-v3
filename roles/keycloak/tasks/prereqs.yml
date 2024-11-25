@@ -1,0 +1,58 @@
+---
+- name: Validate admin console password
+  ansible.builtin.assert:
+    that:
+      - keycloak_admin_pass | length > 11
+    quiet: true
+    fail_msg: "The console administrator password is empty or invalid. Please set the keycloak_admin_pass to a 12+ char long string"
+    success_msg: "{{ 'Console administrator password OK' }}"
+  tags:
+    - keycloak
+
+- name: Validate relative path
+  ansible.builtin.assert:
+    that:
+      - keycloak_http_relative_path is regex('^/.*')
+    quiet: true
+    fail_msg: "The relative path for keycloak_http_relative_path must begin with /"
+    success_msg: "{{ 'Relative path OK' }}"
+  tags:
+    - keycloak
+
+- name: Validate OS family
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family in ["RedHat", "Debian"]
+    quiet: true
+    fail_msg: "Can only install on RedHat or Debian OS families; found {{ ansible_os_family }}"
+    success_msg: "Installing on {{ ansible_os_family }}"
+  tags:
+    - keycloak
+
+- name: "Validate additional env variables"
+  ansible.builtin.assert:
+    that:
+      - item.key is defined and item.key | length > 0
+      - item.value is defined and item.value | length > 0
+    quiet: true
+    fail_msg: "Additional env variable definition is incorrect: `key` and `value` are mandatory."
+  no_log: true
+  loop: "{{ keycloak_additional_env_vars }}"
+  tags:
+    - keycloak
+
+- name: "Validate proxy-headers"
+  ansible.builtin.assert:
+    that:
+      - keycloak_proxy_headers | lower in ['', 'forwarded', 'xforwarded']
+    quiet: true
+    fail_msg: "keycloak_proxy_headers must be either '', 'forwarded' or 'xforwarded'"
+  tags:
+    - keycloak
+
+- name: Set httpd_can_network_connect flag on and keep it persistent across reboots
+  become: true
+  command: setsebool httpd_can_network_connect on -P
+  tags:
+    - nginx
+    - setsebool
